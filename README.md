@@ -28,5 +28,3 @@
 - [ ] Formulaire d'ajout & d'édition
 
 ## Gestion des dossiers clients
-## Gestion des dossiers clients
-## Gestion des dossiers clients
