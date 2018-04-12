@@ -1,0 +1,186 @@
+blocks:
+  - key: 85j1q
+    text: Autres atteintes
+    type: header-one
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: bs4j4
+    text: Conduite à tenir en cas de malaise ou d'aggravation de la maladie
+    type: header-three
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 3ee5d
+    text: >-
+      Un malaise est une sensation pénible traduisant un trouble du
+      fonctionnement de l'organisme, sans que le sujet qui l'éprouve puisse en
+      identifier obligatoirement l'origine. 
+    type: unstyled
+    depth: 0
+    inlineStyleRanges:
+      - offset: 0
+        length: 173
+        style: blue
+    entityRanges: []
+    data: {}
+  - key: 63tq9
+    text: >-
+      Un malaise ou une maladie traduit une défaillance temporaire ou durable.
+      (ex: Asthme, diabète, troubles cardiaque)
+    type: unstyled
+    depth: 0
+    inlineStyleRanges:
+      - offset: 0
+        length: 73
+        style: blue
+    entityRanges: []
+    data: {}
+  - key: chn0v
+    text: 'Le malaise bénin :'
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 46lpo
+    text: >-
+      La plupart des malaises ou maladies sont bénins et ont souvent une origine
+      facilement identifiée :
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: fn24b
+    text: Une modification des condifitions de vie
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 4diud
+    text: Problème de santé non connu
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 391c4
+    text: 'Exposition à des facteurs thermiques extrêmes (hypothermie, hyperthermie)'
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: ebvsa
+    text: Exposition à un produit toxique
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 5jj91
+    text: 'Deux pathologies imposent une prise en charge urgente :'
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 47h6r
+    text: Accident cardiaque
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges:
+      - offset: 0
+        length: 18
+        style: pink
+    entityRanges: []
+    data: {}
+  - key: 4c1mt
+    text: Accident vasculaire cérébral (A.V.C)
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges:
+      - offset: 0
+        length: 36
+        style: pink
+    entityRanges: []
+    data: {}
+  - key: 4fu29
+    text: 'Deux type d''AVC : ischémique & hémorragique'
+    type: unstyled
+    depth: 0
+    inlineStyleRanges:
+      - offset: 18
+        length: 10
+        style: pink
+      - offset: 31
+        length: 12
+        style: pink
+    entityRanges: []
+    data: {}
+  - key: elug
+    text: Les plaies graves
+    type: header-three
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 8do7c
+    text: >-
+      La plaie est une lésion de la peau avec effraction et atteinte possible
+      des tissus sous la peau.
+    type: unstyled
+    depth: 0
+    inlineStyleRanges:
+      - offset: 0
+        length: 96
+        style: blue
+    entityRanges: []
+    data: {}
+  - key: f4jj2
+    text: 'Les plaies sont généralement secondaire à un traumatisme. '
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 5k5v0
+    text: 'Provoquées : '
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 32qel
+    text: 'de l''extérieur vers l''intérieur (Coupure, piqûre, projectile...)'
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: f6p5n
+    text: de l'intérieur vers l'extérieur (Os fracturé qui perfore la peau)
+    type: unordered-list-item
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: abpo9
+    text: ''
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+  - key: 6dv3h
+    text: ''
+    type: unstyled
+    depth: 0
+    inlineStyleRanges: []
+    entityRanges: []
+    data: {}
+entityMap: {}
