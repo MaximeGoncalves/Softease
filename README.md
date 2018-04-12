@@ -26,5 +26,5 @@
 ## Blog
 - [ ] Construire la partie front (maquette)
 - [ ] Formulaire d'ajout & d'édition
-- [ ] 
-- [ ] 
+
+## Gestion des dossiers clients
