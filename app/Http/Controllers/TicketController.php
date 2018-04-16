@@ -41,18 +41,30 @@ class TicketController extends Controller
             $user = Auth::user();
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
                 $search = $request->get('search');
-                $tickets = Ticket::with('users')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('id')->get();
+                $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(16);
                 return view('admin.tickets.index', compact('tickets'));
             endif;
             $search = $request->get('search');
-            $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('id')->get();
+            $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(16);
             return view('admin.tickets.index', ['tickets' => $tickets]);
         }
+
         $user = Auth::user();
         //Si admin alors
         if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
-            $tickets = Ticket::with('user')->get();
+            $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(16);
             return view('admin.tickets.index', compact('tickets'));
+        endif;
+
+        //Si user = LEADER
+        if ($user->hasRole('ROLE_LEADER')) :
+            $users = User::with('society')->where('society_id', $user->society_id)->get();
+//            $tickets = [];
+//            foreach ($users as $user) {
+            $tickets = Ticket::where('society_id', $user->society->id)->orderBy('created_at', 'desc')->paginate(15);
+//            }
+//        dd($tickets);
+            return view('admin.tickets.index', ['tickets' => $tickets]);
         endif;
 
         //Si User alors
@@ -79,11 +91,17 @@ class TicketController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request,[
+            'topic' => 'required',
+            'description' => 'required',
+        ]);
+
         $ticket = new Ticket();
         $ticket->topic = $request->topic;
         $ticket->description = $request->description;
         $ticket->importance = $request->importance;
         $ticket->user()->associate(Auth::user()->id);
+        $ticket->society()->associate(Auth::user()->society->id);
         $ticket->save();
 
         if ($request->pj):

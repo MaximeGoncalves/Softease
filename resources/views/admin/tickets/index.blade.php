@@ -22,8 +22,9 @@
             <th>Demandeur</th>
             <th>Date de création</th>
             @if (Auth::user()->hasRole('ROLE_ADMIN')||Auth::user()->hasRole('ROLE_TECHNICIAN'))
-                <td> Société</td>
+                <th> Société</th>
             @endif
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -37,6 +38,7 @@
                 @if (Auth::user()->hasRole('ROLE_ADMIN'))
                 <td> {{$ticket->user->society->name}}</td>
                 @endif
+                <td> {!! $ticket->state == 1 ? '<span class="badge badge-success">Cloturé</span>' : '<span class="badge badge-info">En cours</span>' !!}</td>
                 <td>
                     <a href="{{route('ticket.show', [ $ticket->id ] )}}">
                         <i class="text-center fa fa-eye" style="color:grey; font-size: 25px;"></i></a>

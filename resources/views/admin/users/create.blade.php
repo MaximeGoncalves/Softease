@@ -8,9 +8,20 @@
             </div>
             <div class="card-body">
                 {{Form::open(['route' => 'user.store', 'class' => ''])}}
-                <div class="form-group">
-                    {{ Form::label('name', 'Nom :') }}
-                    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="name"> Username <em><small>(prenom.nom)</small></em></label>
+                            {{--{!! Form::label('name', 'Username (prénom.nom) :') !!}--}}
+                            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {{ Form::label('fullname', 'Nom complet :') }}
+                            {!! Form::text('fullname', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">

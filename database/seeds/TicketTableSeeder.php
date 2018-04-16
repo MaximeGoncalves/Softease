@@ -24,6 +24,7 @@ class TicketTableSeeder extends Seeder
                 'state' => 0,
                 'importance' => 0,
                 'user_id' => $user1->id,
+                'society_id' => $user1->society->id,
                 'created_at' => \Date('Y-m-d H:i'),
             ]);
         }
@@ -34,6 +35,7 @@ class TicketTableSeeder extends Seeder
         $ticket->treatment_at = \Date('Y-m-d H:i');
         $ticket->close_at = \Date('Y-m-d H:i');
         $ticket->user()->associate($user2);
+        $ticket->society()->associate($user2->society->id);
         $ticket->save();
 
 
@@ -43,6 +45,7 @@ class TicketTableSeeder extends Seeder
         $ticket2->treatment_at = \Date('Y-m-d H:i');
         $ticket2->close_at = \Date('Y-m-d H:i');
         $ticket2->user()->associate($user2);
+        $ticket2->society()->associate($user2->society->id);
         $ticket2->save();
 
     }

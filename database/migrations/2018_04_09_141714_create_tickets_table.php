@@ -24,6 +24,7 @@ class CreateTicketsTable extends Migration
             $table->integer('technician_id')->nullable();
             $table->integer('importance')->default(0);
             $table->integer('user_id')->unsigned();
+            $table->integer('society_id')->unsigned();
             $table->timestamps();
         });
     }

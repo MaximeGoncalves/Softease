@@ -20,7 +20,12 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket)
     {
-        return $ticket->user_id === $user->id;
+        if($ticket->society_id == $user->society_id && $user->hasRole('ROLE_LEADER')):
+            return true;
+        endif;
+        if ($ticket->user_id === $user->id):
+        return true;
+        endif;
     }
 
     /**

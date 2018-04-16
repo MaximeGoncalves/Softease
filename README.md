@@ -18,9 +18,9 @@
 - [x] Echange de commantaires sous le ticket
 - [x] Ajout de PJ
 - [x] Téléchargement de PJ
-- [ ] Validation des champs
-- [ ] LEADER peut voir ses tickets et ceux de la société
-- [ ] Envoi d'email après création du ticket
+- [x] Validation des champs
+- [x] LEADER peut voir ses tickets et ceux de la société
+- [x] Envoi d'email après création du ticket
 - [ ] Notification lors de nouveau commentaires dans le ticket
 
 ## Blog

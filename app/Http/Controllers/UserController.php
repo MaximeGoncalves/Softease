@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->name = $request->name;
-        $user->fullname = $request->name;
+        $user->fullname = $request->fullname;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->active = $request->active;
@@ -98,6 +98,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
+        $user->fullname = $request->fullname;
         $user->email = $request->email;
         $user->society()->associate($request->society);
         $user->roles()->sync($request->role);

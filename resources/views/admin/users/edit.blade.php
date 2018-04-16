@@ -17,8 +17,8 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            {{ Form::label('name', 'Nom :') }}
-                            {!! Form::text('name', $user->fullname, ['class' => 'form-control']) !!}
+                            {{ Form::label('fullname', 'Nom complet :') }}
+                            {!! Form::text('fullname', $user->fullname, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>
