@@ -125,7 +125,7 @@ class UserController extends Controller
     {
         $this->guard()->logout();
         $request->session()->invalidate();
-        Session::flash('error', 'Votre compte n\'est pas activé, merci de contacter votre reponsable');
+        Session::flash('success', 'Vous avez été déconnecté.');
         return redirect('/login');
     }
 

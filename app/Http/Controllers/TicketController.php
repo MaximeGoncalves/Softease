@@ -41,18 +41,18 @@ class TicketController extends Controller
             $user = Auth::user();
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
                 $search = $request->get('search');
-                $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(16);
+                $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(15);
                 return view('admin.tickets.index', compact('tickets'));
             endif;
             $search = $request->get('search');
-            $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(16);
+            $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', ['tickets' => $tickets]);
         }
 
         $user = Auth::user();
         //Si admin alors
         if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
-            $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(16);
+            $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', compact('tickets'));
         endif;
 
@@ -68,7 +68,7 @@ class TicketController extends Controller
         endif;
 
         //Si User alors
-        $tickets = Ticket::with('user')->where('user_id', $user->id)->get();
+        $tickets = Ticket::with('user')->where('user_id', $user->id)->paginate(15);
         return view('admin.tickets.indexUser', compact(['tickets', 'user']));
     }
 
@@ -173,6 +173,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $ticket->technician_id = $request->technician;
         $ticket->state = $request->state;
+        $ticket->importance = $request->importance;
         $ticket->source()->associate($request->source);
         $ticket->save();
         Session::flash('success', 'Le ticket à été mis à jour.');

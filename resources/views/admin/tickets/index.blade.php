@@ -33,12 +33,16 @@
 
             <tr>
                 <td> {{$ticket->topic}}</td>
+
                 <td> {{$ticket->user->fullname}}</td>
                 <td> {{ $ticket->created_at->diffForHumans() }}</td>
                 @if (Auth::user()->hasRole('ROLE_ADMIN'))
-                <td> {{$ticket->user->society->name}}</td>
+                    <td> {{$ticket->user->society->name}}</td>
                 @endif
-                <td> {!! $ticket->state == 1 ? '<span class="badge badge-success">Cloturé</span>' : '<span class="badge badge-info">En cours</span>' !!}</td>
+                <td>
+                    {!! $ticket->state == 1 ? '<span class="badge badge-success">Cloturé</span>' : '<span class="badge badge-info">En cours</span>' !!}
+                    {!! $ticket->importance == 1 ? '<span class="badge badge-danger">Urgent</span>' : '<span class="badge badge-secondary">Normal</span>' !!}
+                </td>
                 <td>
                     <a href="{{route('ticket.show', [ $ticket->id ] )}}">
                         <i class="text-center fa fa-eye" style="color:grey; font-size: 25px;"></i></a>
@@ -47,4 +51,5 @@
         @endforeach
         </tbody>
     </table>
+    {{$tickets->links('widgets.paginate')}}
 @endsection

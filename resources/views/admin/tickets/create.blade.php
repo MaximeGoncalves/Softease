@@ -25,11 +25,11 @@
                     </div>
                     <div class="col-6">
 
-                        <label for="">aefaefaz</label>
+                        <label for="">Pièce(s) jointe(s) :</label>
                         <input type="file" name="pj[]" class="form-control" multiple>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
+                <button type="submit" class="btn btn-primary float-right">Envoyer</button>
                 {{Form::close()}}
 
             </div>

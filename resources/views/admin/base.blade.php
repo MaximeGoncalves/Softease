@@ -10,8 +10,8 @@
     <title>@yield('title', 'Softease')</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 {{--    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
@@ -94,9 +94,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Mon compte</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
-                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
+                        <li><i class="menu-icon fa fa-sign-in"></i><a href="{{route('password.index')}}">Password</a></li>
+                        <li><i class="fa fa-power-off"></i><a href="{{route('logout')}}">Logout</a></li>
+
                     </ul>
                 </li>
             </ul>
@@ -121,12 +121,12 @@
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
+                        {{--<a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>--}}
 
-                        <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span
-                                    class="count">13</span></a>
+                        {{--<a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span--}}
+                                    {{--class="count">13</span></a>--}}
 
-                        <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
+                        {{--<a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>--}}
                         {{Form::open(['route' => 'logout'])}}
                         <button type="submit" class="nav-link" style="background: transparent; border: none;"><i
                                     class="fa fa-power-off"></i> Logout

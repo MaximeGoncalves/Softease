@@ -16,17 +16,39 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <div class="input-group">
                         {{--<label for="state" class="mt-2">Etat </label>--}}
-                        <select name="state" class="form-control">
-                            <option value="0">Ouvert</option>
-                            <option value="1">Clos</option>
+                        <select name="importance" class="form-control">
+                            @if ($ticket->importance === 0 )
+                                <option value="0" selected>Normal</option>
+                                <option value="1">Urgent</option>
+                            @else
+                                <option value="0" >Normal</option>
+                                <option value="1" selected>Urgent</option>
+                            @endif
                         </select>
                     </div>
                 </div>
+
                 <div class="col-sm-2">
                     {{Form::select('source', $sources , $ticket->source->id, ['class' => 'form-control'])}}
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        {{--<label for="state" class="mt-2">Etat </label>--}}
+
+                        <select name="state" class="form-control">
+                            @if ($ticket->state === 0 )
+                                <option value="0" selected>En cours</option>
+                                <option value="1">Clos</option>
+                            @else
+                                <option value="0">En cours</option>
+                                <option value="1" selected>Clos</option>
+                            @endif
+                        </select>
+                    </div>
                 </div>
                 <div class="col-sm-2">
                     <button type="submit" class="btn-secondary btn btn-block float-right">Valider</button>
@@ -48,7 +70,8 @@
                             <div class="col-sm-4">
                                 <div class="list-group">
                                     @foreach($files as $file)
-                                        <a class="list-group-item list-group-item-action" href="{{$file->link}}" download="{{$file->name}}">{{$file->name}}</a>
+                                        <a class="list-group-item list-group-item-action" href="{{$file->link}}"
+                                           download="{{$file->name}}">{{$file->name}}</a>
                                     @endforeach
                                 </div>
                             </div>

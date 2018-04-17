@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                <button type="submit" class="btn btn-primary float-right">Enregistrer les modifications</button>
                 {{Form::close()}}
             </div>
         </div>

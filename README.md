@@ -1,16 +1,19 @@
 # Tâches Softease.fr
 
 ## Profil utilisateur
-- [ ] Modifier son mot de passe
+- [x] Modifier son mot de passe
+- [x] Connexion via username
 
 ## Modules Logins
 - [x] Ajout
 - [x] Suppression
+- [ ] Pagination
 
 ## Modules Utilisateurs / société
 - [x] Ajout / suppression / modification
 - [x] Modification de groupe
-- [ ] Création de groupes
+- [ ] Ajout de groupes
+- [ ] Pagination
 
 ## App SfTicket
 - [x] Création d'un ticket
@@ -21,7 +24,9 @@
 - [x] Validation des champs
 - [x] LEADER peut voir ses tickets et ceux de la société
 - [x] Envoi d'email après création du ticket
+- [ ] Pagination
 - [ ] Notification lors de nouveau commentaires dans le ticket
+- [ ] Possibilité de créer des tickets pour les clients.
 
 ## Blog
 - [ ] Construire la partie front (maquette)

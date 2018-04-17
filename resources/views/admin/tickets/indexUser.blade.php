@@ -20,7 +20,7 @@
         <tr>
             <th>Objet</th>
             <th>Date de création</th>
-            <th>Techncien</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -29,7 +29,10 @@
             <tr>
                 <td> {{$ticket->topic}}</td>
                 <td> {{ $ticket->created_at->diffForHumans() }}</td>
-                <td>{{$ticket->technician_id}}</td>
+                <td>
+                    {!! $ticket->state == 1 ? '<span class="badge badge-success">Cloturé</span>' : '<span class="badge badge-info">En cours</span>' !!}
+                    {!! $ticket->importance == 1 ? '<span class="badge badge-danger">Urgent</span>' : '<span class="badge badge-secondary">Normal</span>' !!}
+                </td>
                 <td>
                     <a href="{{route('ticket.show', [ $ticket->id ] )}}">
                         <i class="text-center fa fa-eye" style="color:grey; font-size: 25px;"></i></a>
@@ -38,4 +41,5 @@
         @endforeach
         </tbody>
     </table>
+    {{$tickets->links('widgets.paginate')}}
 @endsection
