@@ -30,10 +30,8 @@
         </thead>
         <tbody>
         @foreach($tickets as $ticket)
-
             <tr>
                 <td> {{$ticket->topic}}</td>
-
                 <td> {{$ticket->user->fullname}}</td>
                 <td> {{ $ticket->created_at->diffForHumans() }}</td>
                 @if (Auth::user()->hasRole('ROLE_ADMIN'))

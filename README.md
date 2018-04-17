@@ -26,7 +26,7 @@
 - [x] Envoi d'email après création du ticket
 - [ ] Pagination
 - [ ] Notification lors de nouveau commentaires dans le ticket
-- [ ] Possibilité de créer des tickets pour les clients.
+- [x] Possibilité de créer des tickets pour les clients.
 
 ## Blog
 - [ ] Construire la partie front (maquette)

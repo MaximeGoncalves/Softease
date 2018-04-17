@@ -68,7 +68,7 @@ class TicketController extends Controller
         endif;
 
         //Si User alors
-        $tickets = Ticket::with('user')->where('user_id', $user->id)->paginate(15);
+        $tickets = Ticket::with('user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.tickets.indexUser', compact(['tickets', 'user']));
     }
 
@@ -79,7 +79,10 @@ class TicketController extends Controller
      */
     public function create(Request $request)
     {
-        return view('admin.tickets.create');
+
+        $societies = Society::all();
+        $users = User::all();
+        return view('admin.tickets.create', compact(['societies', 'users']));
     }
 
     /**
@@ -91,11 +94,19 @@ class TicketController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request,[
+        $this->validate($request, [
             'topic' => 'required',
             'description' => 'required',
         ]);
-
+        if ($request->user != 0):
+            $ticket = new Ticket();
+            $ticket->topic = $request->topic;
+            $ticket->description = $request->description;
+            $ticket->importance = $request->importance;
+            $ticket->user_id = $request->user;
+            $ticket->society_id = $request->user()->society->id;
+            $ticket->save();
+        else:
         $ticket = new Ticket();
         $ticket->topic = $request->topic;
         $ticket->description = $request->description;
@@ -103,7 +114,7 @@ class TicketController extends Controller
         $ticket->user()->associate(Auth::user()->id);
         $ticket->society()->associate(Auth::user()->society->id);
         $ticket->save();
-
+        endif;
         if ($request->pj):
             $pathSociety = $ticket->user->society->name;
 
@@ -190,4 +201,5 @@ class TicketController extends Controller
     {
         //
     }
+
 }
