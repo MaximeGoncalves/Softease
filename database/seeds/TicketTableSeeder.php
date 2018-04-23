@@ -19,7 +19,6 @@ class TicketTableSeeder extends Seeder
             DB::table('tickets')->insert([
                 'topic' => "J'adore créer des tickets $i!",
                 'description' => 'alekfmlef'.$i,
-                'treatment_at' => \Date('Y-m-d H:i'),
                 'close_at' => \Date('Y-m-d H:i'),
                 'state' => 0,
                 'importance' => 0,
@@ -32,7 +31,6 @@ class TicketTableSeeder extends Seeder
         $ticket = new Ticket();
         $ticket->topic = "Ca marche pas !";
         $ticket->description = 'alekfmlef';
-        $ticket->treatment_at = \Date('Y-m-d H:i');
         $ticket->close_at = \Date('Y-m-d H:i');
         $ticket->user()->associate($user2);
         $ticket->society()->associate($user2->society->id);
@@ -42,7 +40,6 @@ class TicketTableSeeder extends Seeder
         $ticket2 = new Ticket();
         $ticket2->topic = "Toujours pas!";
         $ticket2->description = 'alekfmlef';
-        $ticket2->treatment_at = \Date('Y-m-d H:i');
         $ticket2->close_at = \Date('Y-m-d H:i');
         $ticket2->user()->associate($user2);
         $ticket2->society()->associate($user2->society->id);

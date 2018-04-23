@@ -9,6 +9,9 @@
             </div>
             {{Form::close()}}
         </div>
+        <div class="col-sm-6">
+            <a href="{{route('society.create')}}" class="btn btn-primary mb-4 float-right">Nouveau</a>
+        </div>
     </div>
     <div class="container-fluid">
         <div class="table-responsive">

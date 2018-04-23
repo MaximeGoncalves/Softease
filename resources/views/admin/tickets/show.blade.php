@@ -1,6 +1,6 @@
 @extends('admin.base')
 @section('content')
-    {{setlocale(LC_ALL, 'fr_FR')}}
+    {{--{{setlocale(LC_ALL, 'french')}}--}}
     <div class="container">
         @if (Auth::user()->hasRole('ROLE_ADMIN')||Auth::user()->hasRole('ROLE_TECHNICIAN'))
             {!! Form::open(['route' => ['ticket.update', $ticket->id], 'class' => 'mb-4', 'method' => 'put']) !!}

@@ -1,5 +1,5 @@
 @extends('admin.base')
-{{setlocale(LC_ALL, 'fr_FR')}}
+{{--{{setlocale(LC_ALL, 'fr_FR')}}--}}
 @section('content')
     <div class="row">
         <div class="col-sm-6">

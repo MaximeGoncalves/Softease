@@ -14,7 +14,6 @@
         </div>
         <div class="col-sm-6">
         <a href="{{route('login.create')}}" class="btn btn-primary mb-4 float-right">Nouveau</a>
-
         </div>
     </div>
     <div class="table-responsive">

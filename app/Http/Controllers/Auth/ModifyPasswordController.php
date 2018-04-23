@@ -36,4 +36,24 @@ class ModifyPasswordController extends Controller
         Session::flash('success', 'Le mot de passe à été mis à jour !');
         return redirect(url('/admin'));
     }
+
+    public function resetAdminIndex($id){
+        $user = User::findOrFail($id);
+        return view('auth.passwords.modifyPasswordByAdmin', ['user' => $user]);
+    }
+
+    public function resetAdminStore($id, Request $request){
+        $this->validate($request, [
+            'password' => 'required',
+            'confirm_password' => 'required',
+        ]);
+        $user = User::findOrFail($id);
+        if ($request->password === $request->confirm_password):
+            $user->password = bcrypt($request->password);
+            $user->save();
+        endif;
+
+        Session::flash('success', 'Le mot de passe à été mis à jour !');
+        return redirect(url('/admin'));
+    }
 }

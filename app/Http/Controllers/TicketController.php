@@ -37,6 +37,16 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->get('sort')):
+            $sort = $request->get('sort');
+//            if($sort = 'all'):
+//                $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
+//                return view('admin.tickets.index', ['tickets' => $tickets]);
+//            else:
+                $k = $sort - 1;
+            $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
+            return view('admin.tickets.index', ['tickets' => $tickets]);
+        endif;
         if ($request->get('search')) {
             $user = Auth::user();
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
@@ -107,13 +117,13 @@ class TicketController extends Controller
             $ticket->society_id = $request->user()->society->id;
             $ticket->save();
         else:
-        $ticket = new Ticket();
-        $ticket->topic = $request->topic;
-        $ticket->description = $request->description;
-        $ticket->importance = $request->importance;
-        $ticket->user()->associate(Auth::user()->id);
-        $ticket->society()->associate(Auth::user()->society->id);
-        $ticket->save();
+            $ticket = new Ticket();
+            $ticket->topic = $request->topic;
+            $ticket->description = $request->description;
+            $ticket->importance = $request->importance;
+            $ticket->user()->associate(Auth::user()->id);
+            $ticket->society()->associate(Auth::user()->society->id);
+            $ticket->save();
         endif;
         if ($request->pj):
             $pathSociety = $ticket->user->society->name;
@@ -184,6 +194,9 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $ticket->technician_id = $request->technician;
         $ticket->state = $request->state;
+        if ($request->state == 1):
+            $ticket->close_at = Carbon::now();
+        endif;
         $ticket->importance = $request->importance;
         $ticket->source()->associate($request->source);
         $ticket->save();
@@ -199,7 +212,9 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Ticket::destroy($id);
+        Session::flash('success', 'Le ticket à été supprimé.');
+        return redirect(route('ticket.index'));
     }
 
 }

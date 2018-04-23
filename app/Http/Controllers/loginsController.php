@@ -23,11 +23,14 @@ class loginsController extends Controller
      */
     public function index(Request $request)
     {
-
-
-        if($request->get('search')){
+        if ($request->get('search')) {
             $search = $request->get('search');
-            $logins = Login::where('name', 'LIKE',  '%'.$search.'%')->orderBy('name')->get();
+            $logins = Login::whereHas('society', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })->orWhere('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('username', 'LIKE', '%' . $search . '%')->orderBy('name', 'asc')->get();
+//            $logins = Login::with(['society'])->where('name', 'LIKE',  '%'.$search.'%')->orderBy('name')->get();
+//            dd($logins);
             return view('admin.logins.index', ['logins' => $logins]);
         }
         $logins = Login::with('society')->get();

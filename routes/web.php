@@ -13,13 +13,15 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Auth::routes();
 Route::get('/logout', 'UserController@logout');
 Route::get('/password/modify', 'Auth\ModifyPasswordController@index')->name('password.index');
 Route::post('/password/modify', 'Auth\ModifyPasswordController@store')->name('password.store');
+Route::get('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdminIndex')->name('password.adminReset');
+Route::post('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdminStore')->name('password.adminResetStore');
 
 
 Route::middleware(['auth', 'active'])->group(function () {

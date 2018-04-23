@@ -40,7 +40,7 @@
                                         <optgroup label="{{$society->name}}">
                                             @foreach($users as $user)
                                                 @if($user->society_id == $society->id)
-                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                    <option value="{{$user->id}}">{{$user->fullname}}</option>
                                                 @endif
                                             @endforeach
                                         </optgroup>

@@ -1,18 +1,27 @@
 @extends('admin.base')
-{{setlocale(LC_ALL, 'fr_FR')}}
 @section('content')
+    {{--{{setlocale(LC_ALL, 'fr_FR')}}--}}
+    {{--{{setlocale(LC_TIME, 'fr_FR.utf8')}}--}}
     <div class="row">
         <div class="col-sm-6">
-            {{Form::open(['method' => 'GET'])}}
             <div class="form-inline">
+                {{Form::open(['method' => 'GET'])}}
                 {{Form::text('search', null, ['class' => 'form-control'])}}
-                <button type="submit" class="btn btn-secondary ml-2">Rechercher</button>
+                <button type="submit" class="btn btn-secondary mx-2">Rechercher</button>
+                {{Form::close()}}
+
+                {{Form::open(['method' => 'GET'])}}
+                <select name="sort" id="sort" class="form-control">
+                    <option value="0" selected>All</option>
+                    <option value="1">En cours</option>
+                    <option value="2">Clos</option>
+                </select>
+                <button type="submit" class="btn btn-secondary ml-2">Actualiser</button>
+                {{Form::close()}}
             </div>
-            {{Form::close()}}
         </div>
         <div class="col-sm-6">
             <a href="{{route('ticket.create')}}" class="btn btn-primary mb-4 float-right">Nouveau</a>
-
         </div>
     </div>
     <table class="table table-striped table-sm">
@@ -42,8 +51,19 @@
                     {!! $ticket->importance == 1 ? '<span class="badge badge-danger">Urgent</span>' : '<span class="badge badge-secondary">Normal</span>' !!}
                 </td>
                 <td>
-                    <a href="{{route('ticket.show', [ $ticket->id ] )}}">
-                        <i class="text-center fa fa-eye" style="color:grey; font-size: 25px;"></i></a>
+                    <div class="btn-group">
+                        <a href="{{route('ticket.show', [ $ticket->id ] )}}">
+                            <i class="text-center fa fa-eye" style="color:grey; font-size: 25px;"></i></a>
+                        @if (\Illuminate\Support\Facades\Auth::user()->hasRole('ROLE_ADMIN'))
+                            {!! Form::open(['route' => ['ticket.destroy', $ticket->id], 'class' => 'mb-4', 'method' => 'delete']) !!}
+                            <button type="submit"
+                                    style="border: none; background: transparent; cursor: pointer;"
+                                    class="d-inline">
+                                <i class="fa fa-trash ml-2" style="color:red;font-size: 20px"></i>
+                            </button>
+                            {!! Form::close() !!}
+                        @endif
+                    </div>
                 </td>
             </tr>
         @endforeach
