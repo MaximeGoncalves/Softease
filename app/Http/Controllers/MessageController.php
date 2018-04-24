@@ -22,10 +22,14 @@ class MessageController extends Controller
         $message = new Message();
         $message->content = $request->get('content');
         $message->from_id = Auth::user()->id;
+        if(Auth::user()->id == $ticket->user->id):
+            $message->to_id = 1;
+        else:
         $message->to_id = $ticket->user->id;
+        endif;
         $message->ticket()->associate($ticket);
         $message->save();
-        $user = User::find($ticket->user->id);
+        $user = User::find($message->to_id);
         $user->notify(new NewMessage($message, $ticket));
         return redirect(route('ticket.show', ['id' => $ticket->id]));
     }
