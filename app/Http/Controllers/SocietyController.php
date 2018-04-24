@@ -104,10 +104,10 @@ class SocietyController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'email',
+            'email' => 'required',
         ]);
 
-        $society = Society::findOrFail($id)->first();
+        $society = Society::findOrFail($id);
         $society->name = $request->name;
         $society->email = $request->email;
         $society->address = $request->address;

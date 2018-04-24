@@ -74,7 +74,7 @@
                        aria-expanded="false"> <i class="menu-icon fa ti-email"></i>SFTicket</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-plus"></i><a href="{{route('ticket.create')}}">Ajouter</a></li>
-                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('ticket.index')}}">Afficher la liste</a></li>
+                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('ticket.index', ['sort' => 1])}}">Afficher la liste</a></li>
                     </ul>
                 </li>
                 </li>

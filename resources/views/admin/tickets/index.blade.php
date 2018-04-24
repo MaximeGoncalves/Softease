@@ -12,12 +12,26 @@
 
                 {{Form::open(['method' => 'GET'])}}
                 <select name="sort" id="sort" class="form-control">
-                    <option value="0">All</option>
-                    <option value="1">En cours</option>
-                    <option value="2">Clos</option>
+                    <option value="0" {{\Illuminate\Support\Facades\Session::get('sort') == 0 ? 'selected' : ' '}}>All</option>
+                    <option value="1" {{\Illuminate\Support\Facades\Session::get('sort') == 1 ? 'selected' : ' '}}>En cours</option>
+                    <option value="2" {{\Illuminate\Support\Facades\Session::get('sort') == 2 ? 'selected' : ' '}}>Clos</option>
                 </select>
+                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('ROLE_ADMIN'))
+                    <select name="technician" id="technician" class="form-control">
+
+                        <option value="0" {{ \Illuminate\Support\Facades\Session::get('technician') == 0 ? 'selected' : ' ' }} >
+                            All
+                        </option>
+                        @foreach($technicians as $technician)
+                            {{--<option value="{{$technician->id}}" old("category_id")>{{$technician->user->fullname}}</option>--}}
+                            <option value="{{ $technician->id }}" @if (Illuminate\Support\Facades\Session::get('technician') == $technician->id) selected @endif>{{ $technician->user->fullname }}</option>
+                        @endforeach
+
+                    </select>
+                @endif
                 <button type="submit" class="btn btn-secondary ml-2">Actualiser</button>
                 {{Form::close()}}
+{{--                        {{ dd(\Illuminate\Support\Facades\Session::get('technician')) }}--}}
             </div>
         </div>
         <div class="col-sm-6">

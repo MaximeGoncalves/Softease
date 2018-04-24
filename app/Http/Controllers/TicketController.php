@@ -39,40 +39,75 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->get('sort')):
-            $user = Auth::user();
-            $sort = $request->get('sort');
-            if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
-                $k = $sort - 1;
-                $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
-                return view('admin.tickets.index', ['tickets' => $tickets]);
-            elseif ($user->hasRole('ROLE_LEADER')):
-                $k = $sort - 1;
-                $tickets = Ticket::where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
-                return view('admin.tickets.index', ['tickets' => $tickets]);
-            else:
-                $k = $sort - 1;
-                $tickets = Ticket::where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-                return view('admin.tickets.index', ['tickets' => $tickets]);
-            endif;
+        $technicians = Technician::all();
+        $user = Auth::user();
+        $sort = $request->get('sort');
+        $technician = $request->get('technician');
+
+
+        if ($request->sort == 0):
+            $request->session()->put('sort', 0);
+        else:
+            $request->session()->put('sort', $request->sort);
         endif;
+
+
+        if ($request->technician == 0):
+            $request->session()->put('technician', 0);
+        else:
+            $request->session()->put('technician', $request->technician);
+        endif;
+
+
+        if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
+            $k = $sort - 1;
+            if ($technician == 0):
+                if ($sort == 0):
+                    $tickets = Ticket::orderBy('created_at', 'desc')->paginate(15);
+                    return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+                else:
+                    $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
+                    return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+                endif;
+            else:
+                if ($sort == 0):
+                    $tickets = Ticket::where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
+                    return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+                else:
+                    $tickets = Ticket::where('state', $k)->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
+                    return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+                endif;
+            endif;
+        elseif ($user->hasRole('ROLE_LEADER')):
+            $k = $sort - 1;
+            $tickets = Ticket::where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
+            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+        else:
+            $k = $sort - 1;
+            $tickets = Ticket::where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+        endif;
+
+
         if ($request->get('search')) {
             $user = Auth::user();
             $search = $request->get('search');
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
                 $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(15);
-                return view('admin.tickets.index', compact('tickets'));
+                return view('admin.tickets.index', compact('tickets', 'technicians'));
             endif;
             $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets]);
+            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
         }
+
 
         $user = Auth::user();
         //Si admin alors
         if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
             $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', compact('tickets'));
+            return view('admin.tickets.index', compact('tickets', 'technicians'));
         endif;
+
 
         //Si user = LEADER
         if ($user->hasRole('ROLE_LEADER')) :
@@ -80,20 +115,24 @@ class TicketController extends Controller
 //            $tickets = [];
 //            foreach ($users as $user) {
             $tickets = Ticket::where('society_id', $user->society->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets]);
+            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
         endif;
+
+
 
         //Si User alors
         $tickets = Ticket::with('user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.tickets.indexUser', compact(['tickets', 'user']));
+        return view('admin.tickets.indexUser', compact(['tickets', 'user', 'technicians']));
     }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public
+    function create(Request $request)
     {
 
         $societies = Society::all();
@@ -107,7 +146,8 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public
+    function store(Request $request)
     {
 
         $this->validate($request, [
@@ -167,7 +207,8 @@ class TicketController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public
+    function show(Ticket $ticket)
     {
         $technicians = Technician::all();
         $source = Source::get();
@@ -183,7 +224,8 @@ class TicketController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         //
     }
@@ -195,7 +237,8 @@ class TicketController extends Controller
      * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         $ticket = Ticket::find($id);
         $ticket->technician_id = $request->technician;
@@ -218,7 +261,8 @@ class TicketController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         Ticket::destroy($id);
         Session::flash('success', 'Le ticket à été supprimé.');

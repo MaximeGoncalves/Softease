@@ -27,6 +27,7 @@
                     <a href="#" class="menu-item">Réalisations</a>
                     <a href="#" class="menu-item">Blog</a>
                     <a href="#" class="menu-item">Contact</a>
+                    <a href="{{route('home')}}" class="menu-item">Connexion</a>
                 </nav>
             </div>
         </div>
@@ -144,7 +145,7 @@
     <section class="five bg-primary-softease">
         <div class="container">
             <div class="row">
-                <div class="col"><h3>Vous chercher un webmaster ?</h3></div>
+                <div class="col"><h3>Vous cherchez un webmaster ?</h3></div>
                 <div class="col">
                     <button class="btn-softease float-right">Contacter nous !</button>
                 </div>
