@@ -12,7 +12,7 @@
 
                 {{Form::open(['method' => 'GET'])}}
                 <select name="sort" id="sort" class="form-control">
-                    <option value="0" selected>All</option>
+                    <option value="0">All</option>
                     <option value="1">En cours</option>
                     <option value="2">Clos</option>
                 </select>
@@ -34,6 +34,7 @@
                 <th> Société</th>
             @endif
             <th>Status</th>
+            <th>Technicien</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -48,8 +49,9 @@
                 @endif
                 <td>
                     {!! $ticket->state == 1 ? '<span class="badge badge-success">Cloturé</span>' : '<span class="badge badge-info">En cours</span>' !!}
-                    {!! $ticket->importance == 1 ? '<span class="badge badge-danger">Urgent</span>' : '<span class="badge badge-secondary">Normal</span>' !!}
+                    {!! $ticket->importance == 1 ? '<span class="badge badge-danger">Urgent</span>' : ' ' !!}
                 </td>
+                <td>{{!empty($ticket->technician->user->fullname) ? $ticket->technician->user->fullname : ' '}}</td>
                 <td>
                     <div class="btn-group">
                         <a href="{{route('ticket.show', [ $ticket->id ] )}}">

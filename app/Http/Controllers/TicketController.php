@@ -8,6 +8,7 @@ use App\Notifications\NewTickets;
 use App\Role;
 use App\Society;
 use App\Source;
+use App\Technician;
 use App\Ticket;
 use App\User;
 use Carbon\Carbon;
@@ -38,23 +39,29 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         if ($request->get('sort')):
+            $user = Auth::user();
             $sort = $request->get('sort');
-//            if($sort = 'all'):
-//                $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
-//                return view('admin.tickets.index', ['tickets' => $tickets]);
-//            else:
+            if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
                 $k = $sort - 1;
-            $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets]);
+                $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.index', ['tickets' => $tickets]);
+            elseif ($user->hasRole('ROLE_LEADER')):
+                $k = $sort - 1;
+                $tickets = Ticket::where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.index', ['tickets' => $tickets]);
+            else:
+                $k = $sort - 1;
+                $tickets = Ticket::where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.index', ['tickets' => $tickets]);
+            endif;
         endif;
         if ($request->get('search')) {
             $user = Auth::user();
+            $search = $request->get('search');
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
-                $search = $request->get('search');
                 $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(15);
                 return view('admin.tickets.index', compact('tickets'));
             endif;
-            $search = $request->get('search');
             $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', ['tickets' => $tickets]);
         }
@@ -72,8 +79,6 @@ class TicketController extends Controller
 //            $tickets = [];
 //            foreach ($users as $user) {
             $tickets = Ticket::where('society_id', $user->society->id)->orderBy('created_at', 'desc')->paginate(15);
-//            }
-//        dd($tickets);
             return view('admin.tickets.index', ['tickets' => $tickets]);
         endif;
 
@@ -109,12 +114,13 @@ class TicketController extends Controller
             'description' => 'required',
         ]);
         if ($request->user != 0):
+            $user = User::findOrFail($request->user);
             $ticket = new Ticket();
             $ticket->topic = $request->topic;
             $ticket->description = $request->description;
             $ticket->importance = $request->importance;
-            $ticket->user_id = $request->user;
-            $ticket->society_id = $request->user()->society->id;
+            $ticket->user()->associate($user->id);
+            $ticket->society()->associate($user->society->id);
             $ticket->save();
         else:
             $ticket = new Ticket();
@@ -163,12 +169,12 @@ class TicketController extends Controller
     public function show(Ticket $ticket)
     {
 
-        $admins = User::where('society_id', 1)->get();
+        $technicians = Technician::all();
         $source = Source::get();
         $sources = $source->pluck('name', 'id');
         $files = Attachment::where('ticket_id', $ticket->id)->get();
         $messages = Message::where('ticket_id', $ticket->id)->latest()->simplePaginate(5);
-        return view('admin.tickets.show', compact(['ticket', 'messages', 'admins', 'sources', 'files']));
+        return view('admin.tickets.show', compact(['ticket', 'messages', 'technicians', 'sources', 'files']));
     }
 
     /**

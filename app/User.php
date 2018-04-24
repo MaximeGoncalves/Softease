@@ -54,6 +54,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function technician()
+    {
+        return $this->belongsTo(Technician::class);
+    }
+
+    /**
      * @param string|array $roles
      * @return bool
      */

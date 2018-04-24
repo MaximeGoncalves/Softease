@@ -11,7 +11,9 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="name"> Username <em><small>(prenom.nom)</small></em></label>
+                            <label for="name"> Username <em>
+                                    <small>(prenom.nom)</small>
+                                </em></label>
                             {{--{!! Form::label('name', 'Username (prénom.nom) :') !!}--}}
                             {!! Form::text('name', null, ['class' => 'form-control']) !!}
                         </div>
@@ -50,7 +52,7 @@
                             {!! Form::text('password', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
-                    <div class="col-6 ">
+                    <div class="col-3 ">
                     </div>
                 </div>
                 <div class="col-3">
@@ -61,6 +63,15 @@
                         <span class="switch-handle"></span>
                     </label>
                     Activer ?
+                </div>
+                <div class="col-3">
+                    <label class="switch switch-3d switch-success">
+                        {!! Form::hidden('technician', 0) !!}
+                        {!! Form::checkbox('technician', 1, '', ['class' => 'switch-input']) !!}
+                        <span class="switch-label"></span>
+                        <span class="switch-handle"></span>
+                    </label>
+                    Technicien ?
                 </div>
                 <button type="submit" class="btn btn-primary float-right">Enregistrer</button>
                 {{Form::close()}}

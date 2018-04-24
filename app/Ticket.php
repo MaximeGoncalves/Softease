@@ -21,4 +21,7 @@ class Ticket extends Model
     public function source(){
         return $this->belongsTo(Source::class);
     }
+    public function technician(){
+        return $this->belongsTo(Technician::class);
+    }
 }

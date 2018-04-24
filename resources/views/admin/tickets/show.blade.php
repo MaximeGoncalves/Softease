@@ -10,8 +10,8 @@
                         {{--<label for="technician" class="mt-2">Technicien </label>--}}
                         <select name="technician" class="form-control">
                             <option value="0" selected="selected">Selectionnez un technicien</option>
-                            @foreach($admins as $admin)
-                                <option value="{{$admin->id}}" {{ $ticket->technician_id == $admin->id ? 'selected="selected"' : ' '}}> {{$admin->name}}</option>
+                            @foreach($technicians as $technician)
+                                <option value="{{$technician->id}}" {{ $ticket->technician_id == $technician->id ? 'selected="selected"' : ' '}}> {{$technician->user->name}}</option>
                             @endforeach
                         </select>
                     </div>

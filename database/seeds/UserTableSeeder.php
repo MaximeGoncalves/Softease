@@ -2,6 +2,7 @@
 
 use App\Role;
 use App\Society;
+use App\Technician;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -40,6 +41,10 @@ class UserTableSeeder extends Seeder
         $stan->society()->associate($softease);
         $stan->save();
         $stan->roles()->attach($role_admin);
+
+        $techStan = new Technician();
+        $techStan->user()->associate($stan);
+        $techStan->save();
 
         $techician = new User();
         $techician->name = 'Technicien';

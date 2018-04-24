@@ -54,6 +54,18 @@
                     </label>
                     Activer ?
                 </div>
+                <div class="col-3">
+                    <label class="switch switch-3d switch-success">
+                            <input type="checkbox" value="1" name="technician" {{empty($technician) ? ' ' : 'checked'}} class="switch-input">
+                            {{--{!! Form::checkbox('technician', 1, $technician, ['class' => 'switch-input']) !!}--}}
+                        {{--@else--}}
+                        {{--{!! Form::hidden('technician', 0) !!}--}}
+                        {{--@endif--}}
+                        <span class="switch-label"></span>
+                        <span class="switch-handle"></span>
+                    </label>
+                    Technicien ?
+                </div>
                 <button type="submit" class="btn btn-primary float-right">Enregistrer</button>
                 {{Form::close()}}
 

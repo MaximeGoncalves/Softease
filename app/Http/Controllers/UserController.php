@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\Society;
+use App\Technician;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -48,6 +49,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User();
+        $technician = new Technician();
         $user->name = $request->name;
         $user->fullname = $request->fullname;
         $user->email = $request->email;
@@ -57,6 +59,8 @@ class UserController extends Controller
         $user->save();
         $user->roles()->attach($request->role);
 
+        $technician->user()->associate($user);
+        $technician->save();
         Session::flash('success', 'Utilisateur ajouter à la base de donnée');
         return redirect(route('user.index'));
     }
@@ -82,7 +86,8 @@ class UserController extends Controller
         $user = User::with(['roles', 'society'])->find($id);
         $society = Society::pluck('name', 'id');
         $roles = Role::pluck('name', 'id');
-        return view('admin.users.edit', compact('user', 'society', 'roles'));
+        $technician = Technician::where('user_id', $id)->first();
+        return view('admin.users.edit', compact('user', 'society', 'roles', 'technician'));
     }
 
     /**
@@ -94,8 +99,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
+//        dd(empty($request->technician));
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->fullname = $request->fullname;
@@ -103,6 +107,24 @@ class UserController extends Controller
         $user->society()->associate($request->society);
         $user->roles()->sync($request->role);
         $user->active = $request->active;
+
+        if (empty($request->technician)):
+            $tech = Technician::where('user_id', $id)->first();
+            if ($tech):
+                Technician::destroy($tech->id);
+                Session::flash('success', 'Les modifications ont été éffectuées');
+                return redirect(route('user.index'));
+            endif;
+        else:
+            $tech = Technician::where('user_id', $id)->first();
+            if (empty($tech)):
+                $technician = new Technician();
+                $technician->user()->associate($user);
+                $technician->save();
+                Session::flash('success', 'Les modifications ont été éffectuées');
+                return redirect(route('user.index'));
+            endif;
+        endif;
         $user->save();
         Session::flash('success', 'Les modifications ont été éffectuées');
         return redirect(route('user.index'));

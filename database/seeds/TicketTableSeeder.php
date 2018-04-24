@@ -27,11 +27,12 @@ class TicketTableSeeder extends Seeder
                 'created_at' => \Date('Y-m-d H:i'),
             ]);
         }
-
+        $technician = \App\Technician::find(1);
         $ticket = new Ticket();
         $ticket->topic = "Ca marche pas !";
         $ticket->description = 'alekfmlef';
         $ticket->close_at = \Date('Y-m-d H:i');
+        $ticket->technician()->associate($technician);
         $ticket->user()->associate($user2);
         $ticket->society()->associate($user2->society->id);
         $ticket->save();
