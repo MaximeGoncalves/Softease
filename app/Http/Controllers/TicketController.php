@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Attachment;
 use App\Message;
+use App\Notifications\CloseTicket;
 use App\Notifications\NewTickets;
 use App\Role;
 use App\Society;
@@ -168,7 +169,6 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-
         $technicians = Technician::all();
         $source = Source::get();
         $sources = $source->pluck('name', 'id');
@@ -202,6 +202,8 @@ class TicketController extends Controller
         $ticket->state = $request->state;
         if ($request->state == 1):
             $ticket->close_at = Carbon::now();
+            $user = User::find($ticket->user->id);
+            $user->notify(new CloseTicket($ticket));
         endif;
         $ticket->importance = $request->importance;
         $ticket->source()->associate($request->source);

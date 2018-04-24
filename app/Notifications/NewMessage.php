@@ -2,15 +2,20 @@
 
 namespace App\Notifications;
 
+use App\Message;
 use App\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewTickets extends Notification
+class NewMessage extends Notification
 {
     use Queueable;
+    /**
+     * @var Message
+     */
+    private $message;
     /**
      * @var Ticket
      */
@@ -21,9 +26,10 @@ class NewTickets extends Notification
      *
      * @return void
      */
-    public function __construct(Ticket $ticket)
+    public function __construct(Message $message, Ticket $ticket)
     {
 
+        $this->message = $message;
         $this->ticket = $ticket;
     }
 
@@ -47,10 +53,10 @@ class NewTickets extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Nouveau ticket')
-            ->line('Objet : ' . $this->ticket->topic)
-            ->line('Description : ' . $this->ticket->description)
-            ->action('Voir le ticket', route('ticket.show', $this->ticket));
+            ->subject('Ticket n°' . $this->ticket->id . ' - Nouveau Message')
+            ->line('Vous avez reçu un nouveau message sur le ticket N° ' . $this->ticket->id)
+            ->line('Message : ' . $this->message->content)
+            ->action('Consulter la conversation', route('ticket.show', $this->ticket));
     }
 
     /**

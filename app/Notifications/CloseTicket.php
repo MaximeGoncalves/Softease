@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewTickets extends Notification
+class CloseTicket extends Notification
 {
     use Queueable;
     /**
@@ -30,7 +30,7 @@ class NewTickets extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -41,22 +41,22 @@ class NewTickets extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed $notifiable
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Nouveau ticket')
+            ->subject('Cloture ticket n° '. $this->ticket->id)
             ->line('Objet : ' . $this->ticket->topic)
             ->line('Description : ' . $this->ticket->description)
-            ->action('Voir le ticket', route('ticket.show', $this->ticket));
+            ->line('Madame, Monsieur, nous vous confirmons la clôture de votre ticket n°'. $this->ticket->id);
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)

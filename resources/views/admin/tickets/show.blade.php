@@ -24,7 +24,7 @@
                                 <option value="0" selected>Normal</option>
                                 <option value="1">Urgent</option>
                             @else
-                                <option value="0" >Normal</option>
+                                <option value="0">Normal</option>
                                 <option value="1" selected>Urgent</option>
                             @endif
                         </select>
@@ -93,8 +93,12 @@
                             <p class='text-dark {{Auth::user()->id == $message->from->id ? 'offset text-right' : '' }}'>
                                 <strong>{{$message->from->fullname}} </strong>
                                 <br>
-
                                 <small>{{ $message->created_at->diffForHumans() }}</small>
+                                @if (Auth::user()->id == $message->from->id)
+                                <a href="{{route('message.destroy', [$message->id, $ticket->id])}}"> <i
+                                            class="fa fa-trash ml-2" style="font-size: 15px"></i>
+                                </a>
+                                @endif
                                 <br>
                                 {!! nl2br($message->content) !!}
                             </p>

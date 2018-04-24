@@ -44,6 +44,7 @@ Route::middleware(['auth', 'active'])->group(function () {
 //Route pour les tickets
     Route::resource('/ticket', 'TicketController');
     Route::post('/ticket/{ticket}', 'MessageController@store')->name('message.store');
+    Route::get('/ticket/{ticket}/{message}', 'MessageController@destroy')->name('message.destroy');
 
 });
 
