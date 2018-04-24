@@ -1,0 +1,87 @@
+/* Coolors Exported Palette - coolors.co/eee9e9-ef626c-22181c-333333-94c5cc */
+/* HSL */
+/* RGB */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: 'Lato', sans-serif;
+  color: #333333;
+  background-color: #eee9e9; }
+
+h1 {
+  font-family: 'Lobster';
+  font-size: 100px;
+  color: #333333; }
+
+h2 {
+  font-size: 70px;
+  color: #333333;
+  line-height: 1.25; }
+
+a {
+  color: inherit;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: none;
+    color: inherit; }
+
+.primary {
+  color: #ef626c; }
+
+.sky {
+  color: #94c5cc; }
+
+.bg-primary-softease {
+  background-color: #ef626c; }
+
+.container {
+  width: 1250px;
+  margin: 0 auto; }
+
+header {
+  height: 100vh;
+  background-color: #eee9e9; }
+  header .title {
+    margin-top: 150px;
+    text-align: center; }
+    header .title h2 {
+      margin-top: 25px;
+      font-size: 25px;
+      font-weight: 700;
+      font-family: 'Source Code Pro';
+      color: #333333;
+      opacity: .8;
+      padding-bottom: 100px; }
+    header .title .header_button {
+      font-weight: bold;
+      color: #eee9e9;
+      border: none;
+      line-height: 50px;
+      padding: 0 40px;
+      background-color: #ef626c;
+      text-transform: uppercase;
+      cursor: pointer; }
+      header .title .header_button:hover {
+        background-color: #333333;
+        transition-duration: .3s; }
+  header .header_logo {
+    font-family: 'Lobster';
+    font-size: 50px;
+    float: left;
+    color: #333333; }
+  header .menu {
+    font-weight: 700;
+    font-size: 20px;
+    padding-top: 30px;
+    float: right; }
+    header .menu .menu-item {
+      margin-left: 30px; }
+      header .menu .menu-item:hover {
+        padding-bottom: 10px;
+        border-bottom: solid 4px #333;
+        transition-duration: 0.3s; }
+
+.first {
+  height: 100vh; }
+
+/*# sourceMappingURL=softease.css.map */

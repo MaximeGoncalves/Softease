@@ -1,0 +1,24 @@
+.second{
+  //background-size: auto auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 50vh;
+  color: $grey;
+  font-size: 18px;
+  h2{
+    color: $pink;
+  }
+  .content{
+    position: relative;
+    top: 50%;
+    transform: perspective(1px) translateY(-50%);
+  }
+  img{
+    width: 15%;
+    margin: 0 15px;
+    filter: grayscale(100%);
+    &:hover {
+      filter:none;
+    }
+  }
+}

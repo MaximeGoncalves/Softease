@@ -1,0 +1,202 @@
+/* Coolors Exported Palette - coolors.co/eee9e9-ef626c-22181c-333333-94c5cc */
+/* HSL */
+/* RGB */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: 'Lato', sans-serif;
+  color: #333333;
+  background-color: #eee9e9; }
+
+h1 {
+  font-family: 'Lobster';
+  font-size: 100px;
+  color: #333333; }
+
+h2 {
+  font-size: 70px;
+  color: #333333;
+  line-height: 1.25;
+  font-weight: bold; }
+
+h3 {
+  font-size: 30px;
+  color: #333333;
+  line-height: 1.25;
+  font-weight: bold;
+  text-align: center; }
+
+a {
+  color: inherit;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: none;
+    color: inherit; }
+
+.primary {
+  color: #ef626c; }
+
+.sky {
+  color: #94c5cc; }
+
+.bg-primary-softease {
+  background-color: #ef626c; }
+
+.bg-white {
+  background-color: #ef626c; }
+
+.border-radius {
+  border-radius: 5px; }
+
+button,
+button::after {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s; }
+
+button {
+  background: none;
+  border: 3px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+  display: block;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 10px 20px;
+  position: relative;
+  text-transform: uppercase;
+  cursor: pointer; }
+  button:hover {
+    color: #ef626c;
+    z-index: 1; }
+
+button::after {
+  background: #eee9e9;
+  content: '';
+  position: absolute; }
+
+.btn-softease::after {
+  height: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: -1; }
+
+.btn-softease:hover:after {
+  height: 100%; }
+
+header {
+  height: 100vh;
+  background-color: #eee9e9; }
+  header .title {
+    margin-top: 150px;
+    text-align: center; }
+    header .title h2 {
+      margin-top: 25px;
+      font-size: 25px;
+      font-weight: 700;
+      font-family: 'Source Code Pro';
+      color: #333333;
+      opacity: .8;
+      padding-bottom: 100px; }
+    header .title .header_button {
+      font-weight: bold;
+      color: #eee9e9;
+      border: none;
+      line-height: 50px;
+      padding: 20px 50px;
+      background-color: #ef626c;
+      text-transform: uppercase;
+      cursor: pointer; }
+      header .title .header_button:hover {
+        color: #eee9e9;
+        background-color: #333333;
+        transition-duration: .3s; }
+  header .header_logo {
+    font-family: 'Lobster';
+    font-size: 50px;
+    float: left;
+    color: #333333; }
+  header .menu {
+    font-weight: 700;
+    font-size: 20px;
+    padding-top: 30px;
+    float: right; }
+    header .menu .menu-item {
+      margin-left: 30px; }
+      header .menu .menu-item:hover {
+        padding-bottom: 10px;
+        border-bottom: solid 4px #333;
+        transition-duration: 0.3s; }
+
+.first {
+  padding: 100px 0;
+  color: #eee9e9; }
+  .first i {
+    font-size: 50px;
+    text-align: center;
+    color: #f49097; }
+  .first h2 {
+    color: #eee9e9;
+    margin-bottom: 20px; }
+  .first h3 {
+    color: #eee9e9; }
+  .first p {
+    text-align: center; }
+
+.second {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 50vh;
+  color: #333333;
+  font-size: 18px; }
+  .second h2 {
+    color: #ef626c; }
+  .second .content {
+    position: relative;
+    top: 50%;
+    transform: perspective(1px) translateY(-50%); }
+  .second img {
+    width: 15%;
+    margin: 0 15px;
+    filter: grayscale(100%); }
+    .second img:hover {
+      filter: none; }
+
+.third {
+  background-image: url(../img/second-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 25px;
+  color: #333333; }
+
+.four {
+  padding: 120px 0; }
+
+.five {
+  padding: 75px 0; }
+
+.footer {
+  padding: 100px 0;
+  color: #333333; }
+  .footer i {
+    font-size: 30px;
+    margin: 0 5px; }
+  .footer h3 {
+    color: #ef626c; }
+
+@media screen and (max-width: 991px) {
+  h1 {
+    font-size: 60px; }
+
+  h2 {
+    font-size: 30px; } }
+@media screen and (max-width: 640px) {
+  header .title {
+    margin-top: 0px;
+    text-align: center; }
+    header .title h2 {
+      font-size: 18px; } }
+
+/*# sourceMappingURL=softease.css.map */
