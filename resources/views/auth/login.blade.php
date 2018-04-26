@@ -19,7 +19,10 @@
 
                             <div class="form-group row">
                                 <label for="name"
-                                       class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                       class="col-sm-4 col-form-label text-md-right">
+                                    Nom d'utilisateur
+                                    {{--{{ __('E-Mail Address') }}--}}
+                                </label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
@@ -36,7 +39,10 @@
 
                             <div class="form-group row">
                                 <label for="password"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">
+                                    {{--{{ __('Password') }}--}}
+                                    Mot de passe
+                                </label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
@@ -56,7 +62,9 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox"
-                                                   name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                                                   name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            {{--{{ __('Remember Me') }}--}}
+                                            Se souvenir de moi
                                         </label>
                                     </div>
                                 </div>
@@ -65,11 +73,14 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
+                                        {{--{{ __('Login') }}--}}
+                                        Connexion
                                     </button>
 
+
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        Mot de passe oublié
+                                        {{--{{ __('Forgot Your Password?') }}--}}
                                     </a>
                                 </div>
                             </div>

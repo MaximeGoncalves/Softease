@@ -32,7 +32,7 @@ a {
   text-decoration: none;
   &:hover {
     text-decoration: none;
-    color: inherit;
+    color: $pink;
   }
 }
 
@@ -95,6 +95,20 @@ button::after {
   width: 100%;
   z-index: -1;
 }
+
 .btn-softease:hover:after {
   height: 100%;
+}
+
+.pagination {
+  .pagination-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: $pink;
+    background-color: #fff;
+    border: 1px solid #dee2e6
+  }
 }

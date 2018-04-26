@@ -15,6 +15,8 @@
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/blog', 'BlogController@blog')->name('blog.blog');
+Route::get('/blog/{id}', 'BlogController@article')->name('blog.article');
 
 Auth::routes();
 Route::get('/logout', 'UserController@logout');
@@ -26,11 +28,13 @@ Route::post('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdm
 
 Route::middleware(['auth', 'active'])->group(function () {
 
+    //Route dashboard
     Route::get('/admin', 'HomeController@index')->name('home');
 
+// Route pour les blogs
+    Route::resource('admin/blog', 'BlogController');
 // Route pour les logins
     Route::resource('/admin/login', 'loginsController');
-//    Route::post('/admin/login/createSociety', 'loginsController@createSociety')->name('login.createSociety');
 
 //Route pour Sociétés
     Route::resource('/admin/society', 'SocietyController');
@@ -42,9 +46,7 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::resource('/admin/role', 'RoleController');
 
 //Route pour les tickets
-    Route::resource('/ticket', 'TicketController');
-    Route::post('/ticket/{ticket}', 'MessageController@store')->name('message.store');
-    Route::get('/ticket/{ticket}/{message}', 'MessageController@destroy')->name('message.destroy');
-
+    Route::resource('/admin/ticket', 'TicketController');
+    Route::post('/admin/ticket/{ticket}', 'MessageController@store')->name('message.store');
+    Route::get('/admin/ticket/{ticket}/{message}', 'MessageController@destroy')->name('message.destroy');
 });
-

@@ -22,10 +22,10 @@ class MessageController extends Controller
         $message = new Message();
         $message->content = $request->get('content');
         $message->from_id = Auth::user()->id;
-        if(Auth::user()->id == $ticket->user->id):
+        if (Auth::user()->id == $ticket->user->id):
             $message->to_id = 1;
         else:
-        $message->to_id = $ticket->user->id;
+            $message->to_id = $ticket->user->id;
         endif;
         $message->ticket()->associate($ticket);
         $message->save();
@@ -34,7 +34,7 @@ class MessageController extends Controller
         return redirect(route('ticket.show', ['id' => $ticket->id]));
     }
 
-    public function destroy(int $message ,int $ticket)
+    public function destroy(int $message, int $ticket)
     {
         $ticket = Ticket::findOrFail($ticket);
         Message::destroy($message);

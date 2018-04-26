@@ -63,7 +63,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-user-plus"></i><a href="{{route('user.create')}}">Ajouter</a></li>
                         <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('user.index')}}">Afficher la liste</a></li>
-                        <li><i class="menu-icon fa fa-users"></i><a href="{{route('role.index')}}">Gestions des groupes</a></li>
+                        <li><i class="menu-icon fa fa-users"></i><a href="{{route('role.index')}}">Groupes</a></li>
                     </ul>
                 </li>
                 @endif
@@ -87,6 +87,14 @@
                         <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('login.index')}}">Afficher la liste</a></li>
                     </ul>
                 </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"><i class=" menu-icon fa fa-pencil-square"></i>Blog</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{{route('blog.create')}}">Ajouter</a></li>
+                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('blog.index')}}">Afficher la liste</a></li>
+                        </ul>
+                    </li>
                 @endif
 
                 <h3 class="menu-title">PARAMETRES</h3><!-- /.menu-title -->

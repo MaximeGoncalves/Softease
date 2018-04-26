@@ -7,7 +7,7 @@
                 Nouveau Ticket
             </div>
             <div class="card-body">
-                {{Form::open(['route' => 'ticket.store', 'enctype' => 'multipart/form-data' ])}}
+                {{Form::open(['route' => 'ticket.store', multipart/form-data ])}}
                 <div class="form-group">
                     {{ Form::label('topic', 'Sujet de la demande : ') }}
                     {!! Form::text('topic', null, ['class' => 'form-control']) !!}

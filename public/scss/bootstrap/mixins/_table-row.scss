@@ -8,6 +8,7 @@
     > th,
     > td {
       background-color: $background;
+      font-size: 12px;
     }
   }
 
@@ -19,7 +20,6 @@
     .table-#{$state} {
       @include hover {
         background-color: $hover-background;
-
         > td,
         > th {
           background-color: $hover-background;

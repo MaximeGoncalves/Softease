@@ -83,9 +83,14 @@ class TicketController extends Controller
             $tickets = Ticket::where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
         else:
+            if ($sort == 0):
+                $tickets = Ticket::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.indexUser', ['tickets' => $tickets]);
+            else:
             $k = $sort - 1;
             $tickets = Ticket::where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+            return view('admin.tickets.indexUser', ['tickets' => $tickets, 'technicians' => $technicians]);
+            endif;
         endif;
 
 
