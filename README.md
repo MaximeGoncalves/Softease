@@ -25,11 +25,12 @@
 - [x] LEADER peut voir ses tickets et ceux de la société
 - [x] Envoi d'email après création du ticket
 - [ ] Pagination
-- [ ] Notification lors de nouveau commentaires dans le ticket
+- [x] Notification lors de nouveau commentaires dans le ticket
 - [x] Possibilité de créer des tickets pour les clients.
 
 ## Blog
-- [ ] Construire la partie front (maquette)
-- [ ] Formulaire d'ajout & d'édition
+- [x] Construire la partie front (maquette)
+- [x] Formulaire d'ajout & d'édition
+- [x] Commentaires
 
 ## Gestion des dossiers clients

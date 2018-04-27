@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
@@ -16,18 +17,27 @@ class BlogController extends Controller
      */
     public function blog()
     {
-        $posts = Post::orderBY('created_at', 'desc')->paginate(5);
+        $posts = Post::where('online', 1)->orderBY('created_at', 'desc')->paginate(5);
         $categories = Category::all();
-        $latests = Post::limit(3)->latest()->get();
+        $latests = Post::where('online', 1)->limit(3)->latest()->get();
+        return view('blog.index', compact('posts', 'latests', 'categories'));
+    }
+
+    public function category($id)
+    {
+        $posts = Post::where('category_id', $id)->where('online', 1)->paginate(5);
+        $categories = Category::all();
+        $latests = Post::where('online', 1)->limit(3)->latest()->get();
         return view('blog.index', compact('posts', 'latests', 'categories'));
     }
 
     public function article($id)
     {
         $post = Post::where('id', $id)->first();
+        $comments = Comment::where('post_id', $id)->paginate(5);
         $categories = Category::all();
         $latests = Post::limit(3)->latest()->get();
-        return view('blog.show', compact('post', 'latests', 'categories'));
+        return view('blog.show', compact('post', 'latests', 'categories', 'comments'));
     }
 
     /**
@@ -76,7 +86,7 @@ class BlogController extends Controller
         mkdir($destinationPath, 0777, true);
         $file->move($destinationPath, '/' . $file->getClientOriginalName());
 
-        $article->path = '/app/Blog/' . $category . '/'. $article->title .'/'. $file->getClientOriginalName();
+        $article->path = '/app/Blog/' . $category . '/' . $article->title . '/' . $file->getClientOriginalName();
         $article->author = Auth::user()->fullname;
         $article->imgName = $file->getClientOriginalName();
         $article->content = $request->content;

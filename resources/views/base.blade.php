@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-sm-4 col-12">
                 <h3>Social</h3>
-                <p class="text-center">
+                <p>
                     <a href="#"><i class="fab fa-twitter-square"></i></a>
                     <a href="#"><i class="fab fa-github-square"></i></a>
                     <a href="#"><i class="fab fa-facebook-square"></i></a>
@@ -53,7 +53,7 @@
             </div>
             <div class="col-sm-4 col-12">
                 <h3>Other</h3>
-                <p class="text-center"><a href="#">Lorem Ipsum</a><br>
+                <p><a href="#">Lorem Ipsum</a><br>
                     <a href="#">Lorem Ipsum</a><br>
                     <a href="#">Lorem Ipsum</a><br>
                     <a href="#">Lorem Ipsum</a><br>
@@ -61,7 +61,7 @@
             </div>
             <div class="col-sm-4 col-12">
                 <h3>Règlementaire</h3>
-                <p class="text-center"><a href="#">Mentions légales</a></p>
+                <p><a href="#">Mentions légales</a></p>
             </div>
         </div>
     </div>

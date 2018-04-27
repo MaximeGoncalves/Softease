@@ -24,7 +24,7 @@
         <h3 class="mt-5">Categories</h3>
         <hr>
         @foreach($categories as $category)
-            <a href="#" class="d-block">{{$category->name}} ({{$category->posts()->count()}})</a>
+            <a href="{{route('blog.category',$category->id)}}" class="d-block"> {{$category->name}} ({{$category->posts()->count()}})</a>
         @endforeach
     </div>
 </div>
