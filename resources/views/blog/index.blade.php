@@ -23,7 +23,7 @@
                             <strong><i class="fas fa-hashtag"></i>{{$post->category->name}}</strong>
                         </div>
                         <div class="article-content">
-                            <p>{{$post->content}}
+                            <p>{{$post->extract}}
                             </p>
                         </div>
                         <div class="article-button">

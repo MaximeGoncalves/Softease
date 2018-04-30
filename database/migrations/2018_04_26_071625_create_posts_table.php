@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('path');
             $table->string('imgName');
             $table->longText('content');
+            $table->longText('extract');
             $table->boolean('online');
             $table->integer('category_id')->unsigned();
             $table->timestamps();

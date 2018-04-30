@@ -35,6 +35,7 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::get('/admin', 'HomeController@index')->name('home');
 // Route pour les blogs
     Route::resource('admin/blog', 'BlogController');
+    Route::resource('admin/category', 'CategoryController');
 // Route pour les logins
     Route::resource('/admin/login', 'loginsController');
 //Route pour Sociétés

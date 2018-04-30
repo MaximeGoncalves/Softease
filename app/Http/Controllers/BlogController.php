@@ -47,7 +47,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'DESC')->get();
         return view('admin.blog.index', compact('posts'));
 
     }
@@ -90,6 +90,7 @@ class BlogController extends Controller
         $article->author = Auth::user()->fullname;
         $article->imgName = $file->getClientOriginalName();
         $article->content = $request->content;
+        $article->extract = $request->extract;
         $article->online = $request->online;
         $article->category()->associate($request->category);
         $article->save();

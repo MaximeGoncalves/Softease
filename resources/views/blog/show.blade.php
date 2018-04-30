@@ -16,26 +16,30 @@
                         <p>{{Carbon\Carbon::parse($post->created_at)->format('M Y')}}</p>
                     </div>
                     <div class="article-title">
-                        <h3>{{$post->title}}</h3>
+                        <h3 class="d-inline">{{$post->title}}</h3>
+                        @if(Auth::user() && Auth::user()->hasRole('ROLE_ADMIN'))
+                            <a href="{{route('blog.edit', $post->id)}}" class="float-right"><i
+                                        class="fas fa-pen-square"></i>
+                                Editer l'article</a>
+                        @endif
                     </div>
                     <div class="article-content">
-                        <p>{!!$post->content!!}
-                        </p>
+                        {!!Michelf\Markdown::defaultTransform($post->content)!!}
                     </div>
                 </div>
                 <hr class="mb-5">
+
                 @if(empty($comments->total()))
                     <h3 class="text-center">Aucun commentaire</h3>
                 @else
                     @foreach($comments as $comment)
-                        <h4><strong>{{$comment->username}}</strong></h4>
+                        <p class="d-inline text-uppercase">{{$comment->username}} </p>-
                         <small>{{Carbon\Carbon::parse($comment->created_at)->format('d M Y')}}</small>
-                        <p> {{$comment->comment}}</p>
+                        <p>{!!Michelf\Markdown::defaultTransform($comment->comment)!!}</p>
                     @endforeach
                 @endif
+                <hr width="50%" class="mt-5">
                 <div class="article-add-comment">
-                    {{--<h4>Ajouter un commentaire</h4>--}}
-                    <hr width="50%">
                     <form action="{{route('comment.store', $post->id)}}" method="post">
                         {{Form::token()}}
                         <div class="row">
@@ -59,6 +63,7 @@
                                           class="form-control" required></textarea>
                             </div>
                         </div>
+                        <small>Vous pouvez décorer votre commentaire avec la syntax <u>Markdown</u></small>
                         <button type="submit" class="btn bg-primary-softease mt-2 float-right">Envoyer</button>
                     </form>
                 </div>

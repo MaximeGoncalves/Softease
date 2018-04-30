@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-{{--    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">--}}
+    {{--    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cs-skin-elastic.css') }}">
@@ -47,52 +47,60 @@
                     <a href="{{route('home')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->hasRole('ROLE_ADMIN'))
-                <h3 class="menu-title">GESTION CLIENT</h3><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa fa-building"></i>Sociétés</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-plus"></i><a href="{{route('society.create')}}">Ajouter</a></li>
-                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('society.index')}}">Afficher la liste</a></li>
-                    </ul>
-                </li>
+                    <h3 class="menu-title">GESTION CLIENT</h3><!-- /.menu-title -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fa fa-building"></i>Sociétés</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{{route('society.create')}}">Ajouter</a>
+                            </li>
+                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('society.index')}}">Afficher la
+                                    liste</a></li>
+                        </ul>
+                    </li>
 
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Utilisateurs</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-user-plus"></i><a href="{{route('user.create')}}">Ajouter</a></li>
-                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('user.index')}}">Afficher la liste</a></li>
-                        <li><i class="menu-icon fa fa-users"></i><a href="{{route('role.index')}}">Groupes</a></li>
-                    </ul>
-                </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Utilisateurs</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-user-plus"></i><a href="{{route('user.create')}}">Ajouter</a>
+                            </li>
+                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('user.index')}}">Afficher la
+                                    liste</a></li>
+                            <li><i class="menu-icon fa fa-users"></i><a href="{{route('role.index')}}">Groupes</a></li>
+                        </ul>
+                    </li>
                 @endif
                 <h3 class="menu-title">Applications</h3><!-- /.menu-title -->
                 <li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="" class= "dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false"> <i class="menu-icon fa ti-email"></i>SFTicket</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-plus"></i><a href="{{route('ticket.create')}}">Ajouter</a></li>
-                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('ticket.index', ['sort' => 1])}}">Afficher la liste</a></li>
+                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('ticket.index', ['sort' => 1])}}">Afficher
+                                la liste</a></li>
                     </ul>
                 </li>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->hasRole('ROLE_ADMIN'))
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa fa-lock"></i>Logins</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-plus"></i><a href="{{route('login.create')}}">Ajouter</a></li>
-                        <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('login.index')}}">Afficher la liste</a></li>
-                    </ul>
-                </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"> <i class="menu-icon fa fa-lock"></i>Logins</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{{route('login.create')}}">Ajouter</a></li>
+                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('login.index')}}">Afficher la
+                                    liste</a></li>
+                        </ul>
+                    </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false"><i class=" menu-icon fa fa-pencil-square"></i>Blog</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-plus"></i><a href="{{route('blog.create')}}">Ajouter</a></li>
-                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('blog.index')}}">Afficher la liste</a></li>
+                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('blog.index')}}">Afficher la
+                                    liste</a></li>
+                            <li><i class="fa fa-tags"></i><a href="{{route('category.index')}}">Categories</a></li>
                         </ul>
                     </li>
                 @endif
@@ -102,7 +110,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Mon compte</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="{{route('password.index')}}">Password</a></li>
+                        <li><i class="menu-icon fa fa-sign-in"></i><a href="{{route('password.index')}}">Password</a>
+                        </li>
                         <li><i class="fa fa-power-off"></i><a href="{{route('logout')}}">Logout</a></li>
 
                     </ul>
@@ -132,7 +141,7 @@
                         {{--<a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>--}}
 
                         {{--<a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span--}}
-                                    {{--class="count">13</span></a>--}}
+                        {{--class="count">13</span></a>--}}
 
                         {{--<a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>--}}
                         {{Form::open(['route' => 'logout'])}}
@@ -171,9 +180,9 @@
     <div class="container-fluid">
         @if ($errors->any())
             <div class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}
-                    @endforeach
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
             </div>
         @endif
 
@@ -181,12 +190,12 @@
             <div class="alert alert-success">
                 {{Session('success')}}
             </div>
-            @endif
-            @if (Session('error'))
-                <div class="alert alert-danger">
-                    {{Session('error')}}
-                </div>
-            @endif
+        @endif
+        @if (Session('error'))
+            <div class="alert alert-danger">
+                {{Session('error')}}
+            </div>
+        @endif
 
         @yield('content')
 
