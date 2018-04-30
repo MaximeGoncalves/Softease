@@ -41,11 +41,11 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <label for="username">Username *</label>
-                                <input type="text" id="username" name="username" class="form-control">
+                                <input type="text" id="username" name="username" class="form-control" required>
                             </div>
                             <div class="col-sm-4">
                                 <label for="email">E-mail *</label>
-                                <input type="email" id="email" name="email" class="form-control">
+                                <input type="email" id="email" name="email" class="form-control" required>
                             </div>
                             <div class="col-sm-4">
                                 <label for="website">Site internet</label>
@@ -56,7 +56,7 @@
                             <div class="col">
                                 <label for="comment">Message *</label>
                                 <textarea name="comment" id="comment" cols="30" rows="10"
-                                          class="form-control"></textarea>
+                                          class="form-control" required></textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn bg-primary-softease mt-2 float-right">Envoyer</button>

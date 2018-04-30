@@ -36,7 +36,7 @@ class BlogController extends Controller
         $post = Post::where('id', $id)->first();
         $comments = Comment::where('post_id', $id)->paginate(5);
         $categories = Category::all();
-        $latests = Post::limit(3)->latest()->get();
+        $latests = Post::where('online', 1)->limit(3)->latest()->get();
         return view('blog.show', compact('post', 'latests', 'categories', 'comments'));
     }
 

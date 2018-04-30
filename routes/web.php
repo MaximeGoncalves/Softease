@@ -19,6 +19,8 @@ Route::get('/blog', 'BlogController@blog')->name('blog.blog');
 Route::get('/blog/{id}', 'BlogController@article')->name('blog.article');
 Route::post('/blog/{id}', 'CommentController@store')->name('comment.store');
 Route::get('/blog/category/{id}', 'BlogController@category')->name('blog.category');
+Route::get('/contact', 'HomeController@contact')->name('contact');
+Route::post('/contact', 'HomeController@SendMail')->name('SendMail');
 
 Auth::routes();
 Route::get('/logout', 'UserController@logout');

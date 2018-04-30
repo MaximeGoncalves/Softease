@@ -33,4 +33,8 @@
 - [x] Formulaire d'ajout & d'édition
 - [x] Commentaires
 
+## Contact
+- [ ] Construire l'interface
+- [ ] Utiliser SwiftMailer pour l'envoie des mails
+
 ## Gestion des dossiers clients

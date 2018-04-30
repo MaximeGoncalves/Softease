@@ -14,7 +14,7 @@ class CommentController extends Controller
 //        dd($request->username);
         $request->validate([
             'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'comment' => 'required',
         ]);
 

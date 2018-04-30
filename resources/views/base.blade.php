@@ -26,7 +26,7 @@
                     <a href="/" class="menu-item">Softease</a>
                     <a href="#" class="menu-item">Réalisations</a>
                     <a href="{{route('blog.blog')}}" class="menu-item">Blog</a>
-                    <a href="#" class="menu-item">Contact</a>
+                    <a href="{{route('contact')}}" class="menu-item">Contact</a>
                     @if(\Illuminate\Support\Facades\Auth::user())
                         <a href="{{route('home')}}" class="menu-item">{{Auth::user()->name}}</a>
                     @else
@@ -37,7 +37,26 @@
         </div>
     </div>
 </div>
+<div class="container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </div>
+    @endif
 
+    @if (Session('success'))
+        <div class="alert alert-success">
+            {{Session('success')}}
+        </div>
+    @endif
+    @if (Session('error'))
+        <div class="alert alert-danger">
+            {{Session('error')}}
+        </div>
+    @endif
+</div>
 @yield('content')
 
 <footer class="footer">
@@ -66,6 +85,7 @@
         </div>
     </div>
 </footer>
+@yield('scripts')
 </body>
 
 </html>
