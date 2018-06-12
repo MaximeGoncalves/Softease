@@ -7,7 +7,9 @@
                 Nouveau Ticket
             </div>
             <div class="card-body">
-                {{Form::open(['route' => 'ticket.store', multipart/form-data ])}}
+                {{--{{Form::open(['route' => 'ticket.store'], ['enctype' => 'multipart/form-data'])}}--}}
+                <form action="{{route('ticket.store')}}" enctype="multipart/form-data" method="POST">
+                    {{ csrf_field() }}
                 <div class="form-group">
                     {{ Form::label('topic', 'Sujet de la demande : ') }}
                     {!! Form::text('topic', null, ['class' => 'form-control']) !!}
@@ -37,7 +39,7 @@
                                 <select name="user" id="user" class="form-control">
                                     <option value="0" selected>Selectionner un utilisateur</option>
                                     @foreach($societies as $society)
-                                        <optgroup label="{{$society->name}}">
+                                        <optgroup label="{{ $society->name }}">
                                             @foreach($users as $user)
                                                 @if($user->society_id == $society->id)
                                                     <option value="{{$user->id}}">{{$user->fullname}}</option>
@@ -54,7 +56,8 @@
                         <button type="submit" class="btn btn-primary float-right mt-4">Envoyer</button>
                     </div>
                 </div>
-                {{Form::close()}}
+                </form>
+{{--                {{Form::close()}}--}}
 
             </div>
         </div>

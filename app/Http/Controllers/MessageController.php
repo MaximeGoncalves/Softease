@@ -30,6 +30,8 @@ class MessageController extends Controller
         $message->ticket()->associate($ticket);
         $message->save();
         $user = User::find($message->to_id);
+        $softease = User::find(1);
+        $softease->notify(new NewMessage($message, $ticket));
         $user->notify(new NewMessage($message, $ticket));
         return redirect(route('ticket.show', ['id' => $ticket->id]));
     }

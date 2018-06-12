@@ -15,6 +15,7 @@
 Route::get('/', function () {
     return view('index');
 });
+
 Route::get('/blog', 'BlogController@blog')->name('blog.blog');
 Route::get('/blog/{id}', 'BlogController@article')->name('blog.article');
 Route::post('/blog/{id}', 'CommentController@store')->name('comment.store');
@@ -33,6 +34,9 @@ Route::post('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdm
 Route::middleware(['auth', 'active'])->group(function () {
 //Route dashboard
     Route::get('/admin', 'HomeController@index')->name('home');
+    Route::get('/admin/chart','HomeController@charts');
+    Route::get('/admin/customers','HomeController@customers');
+    Route::get('/admin/technicians','HomeController@technicians');
 // Route pour les blogs
     Route::resource('admin/blog', 'BlogController');
     Route::resource('admin/category', 'CategoryController');

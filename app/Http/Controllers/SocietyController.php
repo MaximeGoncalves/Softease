@@ -53,9 +53,6 @@ class SocietyController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:societies,name',
         ]);
-        if($validatedData){
-            Session::flash('error', 'La raison social existe déjà.');
-        }
 
         $society = new Society();
         $society->name = $request->name;

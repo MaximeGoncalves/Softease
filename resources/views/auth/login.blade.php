@@ -1,93 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                @if (Session('error'))
-                    <div class="alert alert-danger">
-                        {{Session('error')}}
-                    </div>
-                @endif
-                <div class="card">
-                    <div class="card-header">{{ __('Login') }}</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <div class="form-group row">
-                                <label for="name"
-                                       class="col-sm-4 col-form-label text-md-right">
-                                    Nom d'utilisateur
-                                    {{--{{ __('E-Mail Address') }}--}}
-                                </label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text"
-                                           class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                           name="name" value="{{ old('name') }}" required autofocus>
-
-                                    @if ($errors->has('email'))
-                                        <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password"
-                                       class="col-md-4 col-form-label text-md-right">
-                                    {{--{{ __('Password') }}--}}
-                                    Mot de passe
-                                </label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                           class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                           name="password" required>
-
-                                    @if ($errors->has('password'))
-                                        <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"
-                                                   name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            {{--{{ __('Remember Me') }}--}}
-                                            Se souvenir de moi
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{--{{ __('Login') }}--}}
-                                        Connexion
-                                    </button>
-
-
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Mot de passe oublié
-                                        {{--{{ __('Forgot Your Password?') }}--}}
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <body class="align">
+    <h1>S O F T E A S E</h1>
+    <div class="grid">
+        <form method="POST" action="{{ route('login') }}" class="form login">
+            @csrf
+            <div class="form__field">
+                <label for="login__username">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                    </svg>
+                    <span class="hidden">Username</span></label>
+                <input id="login__username" type="text" name="name" class="form__input" placeholder="Username" required>
             </div>
-        </div>
+
+            <div class="form__field">
+                <label for="login__password">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use>
+                    </svg>
+                    <span class="hidden">Password</span></label>
+                <input id="login__password" type="password" name="password" class="form__input" placeholder="Password"
+                       required>
+            </div>
+
+            <div class="form__field">
+                <input type="submit" value="Sign In">
+            </div>
+
+        </form>
+
+        <p class="text--center">Mot de passe oublié ? <a href="{{ route('password.request') }}"> Par ici !</a>
+            <svg class="icon">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#arrow-right"></use>
+            </svg>
+        </p>
+
     </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="icons">
+        <symbol id="arrow-right" viewBox="0 0 1792 1792">
+            <path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z"/>
+        </symbol>
+        <symbol id="lock" viewBox="0 0 1792 1792">
+            <path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"/>
+        </symbol>
+        <symbol id="user" viewBox="0 0 1792 1792">
+            <path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"/>
+        </symbol>
+    </svg>
+
+    </body>
 @endsection

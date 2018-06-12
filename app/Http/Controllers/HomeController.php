@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Mail\contact;
+use App\Society;
+use App\Technician;
+use App\Ticket;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -26,7 +30,39 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $tickets = Ticket::where('state', 0)->get();
+        return view('admin.home', compact('tickets'));
+    }
+
+    public function charts()
+    {
+        $data = Ticket::all()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('m');
+        });
+        return response()->json($data);
+    }
+
+    public function technicians()
+    {
+        $datas = Ticket::where('state', 1)->get();
+        $users = Technician::all();
+        $data = [];
+        foreach ($users as $user) {
+            $data[$user->user->name] = Ticket::where('technician_id', $user->id)->count();
+        }
+        return response()->json($data);
+
+    }
+
+    public function customers()
+    {
+        $datas = Ticket::where('state', 1)->get();
+        $clients = Society::all();
+        $data = [];
+        foreach ($clients as $client) {
+            $data[$client->name] = Ticket::where('society_id', $client->id)->count();
+        }
+        return response()->json($data);
     }
 
     public function contact()
@@ -37,7 +73,7 @@ class HomeController extends Controller
     public function SendMail(Request $request)
     {
         $request->validate([
-            'g-recaptcha-response'=>'required|recaptcha'
+            'g-recaptcha-response' => 'required|recaptcha'
         ]);
         $fullname = $request->fullname;
         $phone = $request->fullname;

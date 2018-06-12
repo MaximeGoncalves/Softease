@@ -251,6 +251,8 @@ class TicketController extends Controller
         if ($request->state == 1):
             $ticket->close_at = Carbon::now();
             $user = User::find($ticket->user->id);
+            $softease = User::find(1);
+            $softease->notify(new CloseTicket($ticket));
             $user->notify(new CloseTicket($ticket));
         endif;
         $ticket->importance = $request->importance;
