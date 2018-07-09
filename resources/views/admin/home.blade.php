@@ -17,20 +17,20 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="card bg-success">
-                        <a href="{{route('login.index', ['sort' => 1])}}" style="color: #fff">
+                        <a href="{{route('login.create', ['sort' => 1])}}" style="color: #fff">
                         <div class="card-body text-center">
                             <i class="fa fa-lock" style="font-size: 20px"></i><br>
-                            Logins
+                            Nouveau Login
                         </div>
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="card bg-danger">
-                        <a href="{{route('ticket.index', ['sort' => 1])}}" style="color: #fff">
+                        <a href="{{route('ticket.create', ['sort' => 1])}}" style="color: #fff">
                             <div class="card-body text-center">
                                 <i class="fa fa-file-text" style="font-size: 20px"></i><br>
-                                Tickets
+                                Nouveau ticket
                             </div>
                         </a>
                     </div>

@@ -35,10 +35,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-8">
-                            @if(\Illuminate\Support\Facades\Auth::user()->society->name == 'Softease')
+                        @if(\Illuminate\Support\Facades\Auth::user()->society->name == 'Softease')
+                            <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="society">Utilisateur :</label>
+                                    <label for="user">Utilisateur :</label>
                                     <select name="user" id="user" class="form-control">
                                         <option value="0" selected>Selectionner un utilisateur</option>
                                         @foreach($societies as $society)
@@ -55,13 +55,31 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            @endif
-                        </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="technician">Technicien :</label>
+                                    <select name="technician" id="technician" class="form-control">
+                                        <option value="0" selected="selected">Selectionner un technicien</option>
+                                        @foreach($technicians as $technician)
+                                            <option value="{{$technician->id}}"> {{$technician->user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="col-sm-4">
-                            <button type="submit" class="btn btn-primary float-right mt-4">Envoyer</button>
+                            <label for="source">Source :</label>
+                            <select name="source" id="source" class="form-control">
+                                @foreach($sources as $source)
+                                    <option value="{{$source->id}}">{{$source->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
+
                     </div>
+                    <button type="submit" class="btn btn-primary float-right mt-4">Envoyer</button>
                 </form>
                 {{--                {{Form::close()}}--}}
 

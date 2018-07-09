@@ -144,7 +144,9 @@ class TicketController extends Controller
 
         $societies = Society::all();
         $users = User::all();
-        return view('admin.tickets.create', compact(['societies', 'users']));
+        $technicians = Technician::all();
+        $sources = Source::all();
+        return view('admin.tickets.create', compact(['societies', 'users', 'technicians', 'sources']));
     }
 
     /**
@@ -168,6 +170,8 @@ class TicketController extends Controller
             $ticket->description = $request->description;
             $ticket->importance = $request->importance;
             $ticket->user()->associate($user->id);
+            $ticket->source()->associate($request->source);
+            $ticket->technician()->associate($request->technician);
             $ticket->society()->associate($user->society->id);
             $ticket->save();
         else:
@@ -275,7 +279,8 @@ class TicketController extends Controller
                 $user->notify(new CloseTicket($ticket));
             endif;
         endif;
-        $ticket->technician_id = $request->technician;
+//        $ticket->technician_id = $request->technician;
+        $ticket->technician()->associate($request->technician);
         $ticket->state = $request->state;
         $ticket->importance = $request->importance;
         $ticket->source()->associate($request->source);
