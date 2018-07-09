@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use App\Attachment;
 use App\Message;
 use App\Notifications\CloseTicket;
@@ -14,6 +15,7 @@ use App\Ticket;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Couchbase\UserSettings;
@@ -40,10 +42,9 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         $technicians = Technician::all();
-        $user = Auth::user();
+        $user = User::with(['roles'])->where('id', Auth::user()->id)->first();
         $sort = $request->get('sort');
         $technician = $request->get('technician');
-
 
         if ($request->sort == 0):
             $request->session()->put('sort', 0);
@@ -63,39 +64,38 @@ class TicketController extends Controller
             $k = $sort - 1;
             if ($technician == 0):
                 if ($sort == 0):
-                    $tickets = Ticket::orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 else:
-                    $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 endif;
             else:
                 if ($sort == 0):
-                    $tickets = Ticket::where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 else:
-                    $tickets = Ticket::where('state', $k)->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 endif;
             endif;
         elseif ($user->hasRole('ROLE_LEADER')):
             $k = $sort - 1;
-            $tickets = Ticket::where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
+            $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
         else:
             if ($sort == 0):
-                $tickets = Ticket::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
                 return view('admin.tickets.indexUser', ['tickets' => $tickets]);
             else:
-            $k = $sort - 1;
-            $tickets = Ticket::where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.indexUser', ['tickets' => $tickets, 'technicians' => $technicians]);
+                $k = $sort - 1;
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.indexUser', ['tickets' => $tickets, 'technicians' => $technicians]);
             endif;
         endif;
 
 
-        if ($request->get('search')) {
-            $user = Auth::user();
+        if ($request->get('search')) :
             $search = $request->get('search');
             if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
                 $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(15);
@@ -103,10 +103,8 @@ class TicketController extends Controller
             endif;
             $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
-        }
+        endif;
 
-
-        $user = Auth::user();
         //Si admin alors
         if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
             $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
@@ -122,7 +120,6 @@ class TicketController extends Controller
             $tickets = Ticket::where('society_id', $user->society->id)->orderBy('created_at', 'desc')->paginate(15);
             return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
         endif;
-
 
 
         //Si User alors
@@ -201,9 +198,17 @@ class TicketController extends Controller
         endif;
 
         $user = User::find(1);
+        $allLeaders = User::whereHas('roles', function ($q) use ($ticket) {
+            $q->where('name', ['ROLE_LEADER']);
+        })->get();
+        foreach ($allLeaders as $leader) {
+            if ($leader->society_id == $ticket->society_id) {
+                $leader->notify(new NewTickets($ticket));
+            }
+        }
         $user->notify(new NewTickets($ticket));
         Session::flash('success', 'Le ticket à été créer, merci.');
-        return redirect(route('ticket.index'));
+        return redirect(route('ticket.index', ['sort=1']));
     }
 
     /**
@@ -220,7 +225,8 @@ class TicketController extends Controller
         $sources = $source->pluck('name', 'id');
         $files = Attachment::where('ticket_id', $ticket->id)->get();
         $messages = Message::where('ticket_id', $ticket->id)->latest()->simplePaginate(5);
-        return view('admin.tickets.show', compact(['ticket', 'messages', 'technicians', 'sources', 'files']));
+        $actions = Action::where('ticket_id', $ticket->id)->latest()->paginate(5);
+        return view('admin.tickets.show', compact(['ticket', 'messages', 'actions', 'technicians', 'sources', 'files']));
     }
 
     /**
@@ -246,20 +252,31 @@ class TicketController extends Controller
     function update(Request $request, $id)
     {
         $ticket = Ticket::find($id);
+
+        if ($ticket->state === 0):
+            if ($request->state == 1):
+                $ticket->close_at = Carbon::now();
+                $user = User::find($ticket->user->id);
+                $allLeaders = User::whereHas('roles', function ($q) use ($ticket) {
+                    $q->where('name', ['ROLE_LEADER']);
+                })->get();
+                foreach ($allLeaders as $leader) {
+                    if ($leader->society_id == $ticket->society_id && $leader->id != $user->id){
+                        $leader->notify(new CloseTicket($ticket));
+                    }
+                }
+                $softease = User::find(1);
+                $softease->notify(new CloseTicket($ticket));
+                $user->notify(new CloseTicket($ticket));
+            endif;
+        endif;
         $ticket->technician_id = $request->technician;
         $ticket->state = $request->state;
-        if ($request->state == 1):
-            $ticket->close_at = Carbon::now();
-            $user = User::find($ticket->user->id);
-            $softease = User::find(1);
-            $softease->notify(new CloseTicket($ticket));
-            $user->notify(new CloseTicket($ticket));
-        endif;
         $ticket->importance = $request->importance;
         $ticket->source()->associate($request->source);
         $ticket->save();
         Session::flash('success', 'Le ticket à été mis à jour.');
-        return redirect(route('ticket.index'));
+        return redirect(route('ticket.index', ['sort=1']));
     }
 
     /**

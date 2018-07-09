@@ -1,4 +1,24 @@
 (function ($) {
+    $('.field-input').focus(function () {
+        $(this).parent().addClass('is-focus has-label');
+    })
+    $('.field-input').blur(function () {
+        if($(this).val() == ''){
+            $(this).parent().removeClass('has-label');
+        }
+        $(this).parent().removeClass('is-focus');
+    })
+    $('.field-input').each(function () {
+        if ($(this).val() != '') {
+            $(this).parent().addClass('has-label');
+        }
+    })
+    $('#trumbowyg').trumbowyg({
+        btns: ['strong', 'em', '|', 'underline', 'viewHTML','removeformat'],
+        autogrow: true,
+        lang: 'fr',
+        semantic: false
+    });
     // Customers
     $.ajax({
         url: "admin/customers",
@@ -29,7 +49,7 @@
     });
 //Technician
     $.ajax({
-        url: "http://localhost/admin/technicians",
+        url: "admin/technicians",
         method: 'GET',
         success: function (data) {
             console.log(data)
@@ -138,6 +158,7 @@
     });
 })
 (jQuery)
+
 
 
 

@@ -49,7 +49,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User();
-        $technician = new Technician();
         $user->name = $request->name;
         $user->fullname = $request->fullname;
         $user->email = $request->email;
@@ -58,9 +57,11 @@ class UserController extends Controller
         $user->society()->associate($request->society);
         $user->save();
         $user->roles()->attach($request->role);
-
-        $technician->user()->associate($user);
-        $technician->save();
+        if ($request->technician) {
+            $technician = new Technician();
+            $technician->user()->associate($user);
+            $technician->save();
+        }
         Session::flash('success', 'Utilisateur ajouter à la base de donnée');
         return redirect(route('user.index'));
     }

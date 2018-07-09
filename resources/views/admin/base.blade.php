@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/trumbowyg/ui/trumbowyg.min.css') }}">
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/solid.js"
             integrity="sha384-P4tSluxIpPk9wNy8WSD8wJDvA8YZIkC6AQ+BfAFLXcUZIPQGu4Ifv4Kqq+i2XzrM"
             crossorigin="anonymous"></script>
@@ -212,12 +213,13 @@
 <script src="/js/main.js"></script>
 <script src="/js/chartjs.min.js"></script>
 <script src="/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="/js/trumbowyg/trumbowyg.js"></script>
+<script src="/js/softease.js"></script>
 {{--<script src="/js/widgets.js"></script>--}}
 {{--<script src="/js/lib/vector-map/jquery.vmap.js"></script>--}}
 {{--<script src="/js/lib/vector-map/jquery.vmap.min.js"></script>--}}
 {{--<script src="/js/lib/vector-map/jquery.vmap.sampledata.js"></script>--}}
 {{--<script src="/js/lib/vector-map/country/jquery.vmap.world.js"></script>--}}
-<script src="/js/softease.js"></script>
 
 @yield('scripts')
 

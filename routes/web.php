@@ -34,9 +34,9 @@ Route::post('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdm
 Route::middleware(['auth', 'active'])->group(function () {
 //Route dashboard
     Route::get('/admin', 'HomeController@index')->name('home');
-    Route::get('/admin/chart','HomeController@charts');
-    Route::get('/admin/customers','HomeController@customers');
-    Route::get('/admin/technicians','HomeController@technicians');
+    Route::get('/admin/chart', 'HomeController@charts');
+    Route::get('/admin/customers', 'HomeController@customers');
+    Route::get('/admin/technicians', 'HomeController@technicians');
 // Route pour les blogs
     Route::resource('admin/blog', 'BlogController');
     Route::resource('admin/category', 'CategoryController');
@@ -52,4 +52,8 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::resource('/admin/ticket', 'TicketController');
     Route::post('/admin/ticket/{ticket}', 'MessageController@store')->name('message.store');
     Route::get('/admin/ticket/{ticket}/{message}', 'MessageController@destroy')->name('message.destroy');
+    //Action effectuées.
+    Route::post('/admin/ticket/action/{ticket}', 'ActionsController@store')->name('action.store');
+    Route::get('/admin/ticket/action/{ticket}/{action}', 'ActionsController@destroy')->name('action.destroy');
+
 });

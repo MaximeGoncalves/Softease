@@ -12,6 +12,7 @@
                 @endif
             </div>
         </div>
+        @if(\Illuminate\Support\Facades\Auth::user()->society->name == 'Softease')
         <div class="row my-2">
             <div class="col-lg-5">
                 <div class="box">
@@ -96,5 +97,6 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection
 

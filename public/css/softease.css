@@ -31,19 +31,19 @@ a {
   text-decoration: none; }
   a:hover {
     text-decoration: none;
-    color: #ef626c; }
+    color: #e74c3c; }
 
 .primary {
-  color: #ef626c; }
+  color: #e74c3c; }
 
 .sky {
   color: #94c5cc; }
 
 .bg-primary-softease {
-  background-color: #ef626c; }
+  background-color: #e74c3c; }
 
 .bg-white {
-  background-color: #ef626c; }
+  background-color: #e74c3c; }
 
 .border-radius {
   border-radius: 5px; }
@@ -68,7 +68,7 @@ button {
   text-transform: uppercase;
   cursor: pointer; }
   button:hover {
-    color: #ef626c;
+    color: #e74c3c;
     z-index: 1; }
 
 .form-control {
@@ -84,7 +84,7 @@ button {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   .form-control:focus {
-    border: solid 2px #ef626c;
+    border: solid 2px #e74c3c;
     box-shadow: none;
     background-color: #eee9e9; }
 
@@ -109,7 +109,7 @@ button::after {
   padding: .5rem .75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #ef626c;
+  color: #e74c3c;
   background-color: #fff;
   border: 1px solid #dee2e6; }
 
@@ -133,7 +133,7 @@ header {
       border: none;
       line-height: 50px;
       padding: 20px 50px;
-      background-color: #ef626c;
+      background-color: #e74c3c;
       text-transform: uppercase;
       cursor: pointer; }
       header .title .header_button:hover {
@@ -167,7 +167,7 @@ header {
   .first i {
     font-size: 50px;
     text-align: center;
-    color: #f49097; }
+    color: #ed7669; }
   .first h2 {
     color: #eee9e9;
     margin-bottom: 20px; }
@@ -184,7 +184,7 @@ header {
   color: #333333;
   font-size: 18px; }
   .second h2 {
-    color: #ef626c; }
+    color: #e74c3c; }
   .second .content {
     position: relative;
     top: 50%;
@@ -216,7 +216,7 @@ header {
     font-size: 30px;
     margin: 0 5px; }
   .footer h3 {
-    color: #ef626c; }
+    color: #e74c3c; }
 
 .header {
   height: 300px;
@@ -237,14 +237,14 @@ header {
   .article .article-title h3 {
     text-align: left; }
 .article .article-category {
-  color: #ef626c; }
+  color: #e74c3c; }
 .article .article-content {
   margin-top: 20px; }
 .article .article-date {
   position: relative;
   text-align: center;
   padding: 30px 0;
-  background-color: #ef626c;
+  background-color: #e74c3c;
   width: 150px;
   height: 150px;
   margin: -75px 0 0 30px;
@@ -258,14 +258,14 @@ header {
   text-align: center; }
   .article .article-button .btn-softease {
     font-weight: bold;
-    color: #ef626c;
-    border: solid 3px #ef626c;
+    color: #e74c3c;
+    border: solid 3px #e74c3c;
     border-radius: 5px;
     text-transform: none;
     padding: 0 50px; }
     .article .article-button .btn-softease:hover {
       color: #eee9e9;
-      background: #ef626c; }
+      background: #e74c3c; }
 
 .article-add-comment label {
   font-weight: bold; }
@@ -282,10 +282,10 @@ header {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   .article-add-comment .form-control:focus {
-    border: solid 2px #ef626c;
+    border: solid 2px #e74c3c;
     box-shadow: none; }
 .article-add-comment button:hover {
-  background-color: #f17982;
+  background-color: #ea6153;
   color: #eee9e9; }
 
 h3 {
@@ -294,7 +294,7 @@ h3 {
 .side-bar {
   margin-left: 10px; }
   .side-bar .side-bar-category a:hover {
-    color: #ef626c; }
+    color: #e74c3c; }
 
 .filter-pink {
   position: relative;

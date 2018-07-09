@@ -92,7 +92,7 @@
                             {!! Form::open(['route' => ['ticket.destroy', $ticket->id], 'method' => 'delete']) !!}
                             <button type="submit"
                                     style="border: none; background: transparent; cursor: pointer;"
-                                    class="d-inline">
+                                    class="d-inline" onclick="return confirm('Etes vous sûr de vouloir supprimer le ticket ?');">
                                 <i class="fa fa-trash ml-2" style="color:red; font-size: 20px;"></i>
                             </button>
                             {!! Form::close() !!}
