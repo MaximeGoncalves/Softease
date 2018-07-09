@@ -80,9 +80,14 @@ class TicketController extends Controller
                 endif;
             endif;
         elseif ($user->hasRole('ROLE_LEADER')):
-            $k = $sort - 1;
-            $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+            if ($sort == 0):
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.indexUser', ['tickets' => $tickets]);
+            else:
+                $k = $sort - 1;
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+            endif;
         else:
             if ($sort == 0):
                 $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
@@ -261,7 +266,7 @@ class TicketController extends Controller
                     $q->where('name', ['ROLE_LEADER']);
                 })->get();
                 foreach ($allLeaders as $leader) {
-                    if ($leader->society_id == $ticket->society_id && $leader->id != $user->id){
+                    if ($leader->society_id == $ticket->society_id && $leader->id != $user->id) {
                         $leader->notify(new CloseTicket($ticket));
                     }
                 }
