@@ -160,19 +160,23 @@
                                         suivants</a>
                                 </div>
                             @endif
-                            @if (Auth::user()->hasRole('ROLE_ADMIN')||Auth::user()->hasRole('ROLE_TECHNICIAN'))
-                                <form action="{{route('action.store', $ticket->id)}}" method="post">
-                                    {{Form::token()}}
-                                    <div class="form-group">
-                                <input name="content" placeholder="Action menée"
-                                          class="form-control"/>
-                                    </div>
-                                    <button class="btn btn-primary float-right" type="submit">Envoyer</button>
-                                </form>
-                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->hasRole('ROLE_ADMIN')||Auth::user()->hasRole('ROLE_TECHNICIAN'))
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{route('action.store', $ticket->id)}}" method="post">
+                            {{Form::token()}}
+                            <div class="form-group">
+                                <input name="content" placeholder="Action menée"
+                                       class="form-control"/>
+                            </div>
+                            <button class="btn btn-primary btn-block" type="submit">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
+            @endif
         </div>
 @endsection()
