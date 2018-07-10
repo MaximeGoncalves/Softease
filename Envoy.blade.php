@@ -1,9 +1,8 @@
 @servers(['web' => 'hostsffrfs@ssh.cluster026.hosting.ovh.net'])
 @setup
 $dir = "/home/hostsffrfs/Softease";
-$composer = "/home/hostsffrfs/bin/composer.phar";
 $filelinks = ['.env'];
-$dirlinks = ['public/app'];
+$dirlinks = ['public/app','storage'];
 $releases = 3;
 $repo = $dir.'/repo';
 $shared = $dir.'/shared';
@@ -51,6 +50,14 @@ echo "CREATE SYMBOLIC LINK";
 @endtask
 
 @task('links')
+@foreach($dirlinks as $link)
+    mkdir -p {{ $shared }}/{{ $link }}
+    @if(strpos($link,'/'))
+        mkdir -p {{ $release }}/{{ dirname($link) }};
+    @endif
+    chmod 777 {{ $shared }}/{{ $link }};
+    ln -s {{$shared}}/{{$link}} {{$release}}/{{$link}};
+@endforeach
 @foreach($filelinks as $link)
     ln -s {{$shared}}/{{$link}} {{$release}}/{{$link}};
 @endforeach
@@ -58,7 +65,6 @@ echo liens faits !
 @endtask
 
 @task('rollback')
-    rm {{ $current }}
+rm {{ $current }}
 ls {{$dir}}/release |tail -n 2|head -n 1 |xargs -r -I{} ln -s {{ $dir }}/release/{}{{ $current }};
-
 @endtask

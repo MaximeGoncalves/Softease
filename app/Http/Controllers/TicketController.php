@@ -212,10 +212,18 @@ class TicketController extends Controller
         })->get();
         foreach ($allLeaders as $leader) {
             if ($leader->society_id == $ticket->society_id) {
-                $leader->notify(new NewTickets($ticket));
+                try {
+                    $leader->notify(new NewTickets($ticket));
+                } catch (\Exception $e) {
+                    Session::flash('success', $e->getMessage());
+                }
             }
         }
-        $user->notify(new NewTickets($ticket));
+        try {
+            $user->notify(new NewTickets($ticket));
+        } catch (\Exception $e) {
+            Session::flash('error', 'A T T E N T I O N  : ' . $e->getMessage());
+        }
         Session::flash('success', 'Le ticket à été créer, merci.');
         return redirect(route('ticket.index', ['sort=1']));
     }
@@ -271,12 +279,20 @@ class TicketController extends Controller
                 })->get();
                 foreach ($allLeaders as $leader) {
                     if ($leader->society_id == $ticket->society_id && $leader->id != $user->id) {
-                        $leader->notify(new CloseTicket($ticket));
+                        try {
+                            $leader->notify(new CloseTicket($ticket));
+                        } catch (\Exception $e) {
+                            Session::flash('error', $e->getMessage());
+                        }
                     }
                 }
                 $softease = User::find(1);
-                $softease->notify(new CloseTicket($ticket));
-                $user->notify(new CloseTicket($ticket));
+                try {
+                    $softease->notify(new CloseTicket($ticket));
+                    $user->notify(new CloseTicket($ticket));
+                } catch (\Exception $e) {
+                    Session::flash('error', $e->getMessage());
+                }
             endif;
         endif;
 //        $ticket->technician_id = $request->technician;

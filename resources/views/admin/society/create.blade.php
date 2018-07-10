@@ -101,7 +101,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{route('society.store')}}">
+                <form action="{{route('society.store')}}" method="post">
                     @csrf
                     <div class="field">
                         <label for="name" class="field-label">Raison social</label>
