@@ -67,17 +67,15 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-sm-4">
+                                <label for="source">Source :</label>
+                                <select name="source" id="source" class="form-control">
+                                    @foreach($sources as $source)
+                                        <option value="{{$source->id}}">{{$source->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @endif
-
-                        <div class="col-sm-4">
-                            <label for="source">Source :</label>
-                            <select name="source" id="source" class="form-control">
-                                @foreach($sources as $source)
-                                    <option value="{{$source->id}}">{{$source->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                     </div>
                     <button type="submit" class="btn btn-primary float-right mt-4">Envoyer</button>
                 </form>
