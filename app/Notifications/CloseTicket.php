@@ -48,9 +48,11 @@ class CloseTicket extends Notification
     {
         return (new MailMessage)
             ->subject('Cloture ticket n° '. $this->ticket->id)
-            ->line('Objet : ' . $this->ticket->topic)
-            ->line('Description : ' . $this->ticket->description)
-            ->line('Madame, Monsieur, sauf erreur de notre part, nous vous confirmons la clôture de votre ticket n°'. $this->ticket->id . '.');
+            ->line('Madame, Monsieur, sauf erreur de notre part, nous vous confirmons la clôture de votre ticket n°'. $this->ticket->id . '.')
+            ->line('<u>Objet :</u> '. $this->ticket->topic)
+            ->line('<u>Description :</u> '. $this->ticket->description)
+            ->line('<br>');
+
     }
 
     /**

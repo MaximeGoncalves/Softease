@@ -31,7 +31,8 @@ class HomeController extends Controller
     public function index()
     {
         $tickets = Ticket::where('state', 0)->get();
-        return view('admin.home', compact('tickets'));
+        $allTickets = Ticket::count();
+        return view('admin.home', compact(['tickets', 'allTickets']));
     }
 
     public function charts()

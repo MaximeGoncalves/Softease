@@ -25,16 +25,11 @@
 - [x] LEADER peut voir ses tickets et ceux de la société
 - [x] Envoi d'email après création du ticket
 - [ ] Pagination
-- [x] Notification lors de nouveau commentaires dans le ticket
+- [ ] Notification lors de nouveau commentaires dans le ticket
 - [x] Possibilité de créer des tickets pour les clients.
 
 ## Blog
-- [x] Construire la partie front (maquette)
-- [x] Formulaire d'ajout & d'édition
-- [x] Commentaires
-
-## Contact
-- [ ] Construire l'interface
-- [ ] Utiliser SwiftMailer pour l'envoie des mails
+- [ ] Construire la partie front (maquette)
+- [ ] Formulaire d'ajout & d'édition
 
 ## Gestion des dossiers clients

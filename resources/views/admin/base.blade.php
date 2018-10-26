@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/trumbowyg/ui/trumbowyg.min.css') }}">
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/solid.js"
             integrity="sha384-P4tSluxIpPk9wNy8WSD8wJDvA8YZIkC6AQ+BfAFLXcUZIPQGu4Ifv4Kqq+i2XzrM"
             crossorigin="anonymous"></script>
@@ -75,7 +76,7 @@
                 <li>
                 <li class="menu-item-has-children dropdown">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false"> <i class="menu-icon fa ti-email"></i>SFTicket</a>
+                       aria-expanded="false"> <i class="menu-icon fa fa-file-text"></i>SFTicket</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-plus"></i><a href="{{route('ticket.create')}}">Ajouter</a></li>
                         <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('ticket.index', ['sort' => 1])}}">Afficher
@@ -101,6 +102,16 @@
                             <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('blog.index')}}">Afficher la
                                     liste</a></li>
                             <li><i class="fa fa-tags"></i><a href="{{route('category.index')}}">Categories</a></li>
+                        </ul>
+                    </li>
+                    @else
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="truZe"
+                           aria-expanded="false"> <i class="menu-icon fa fa-lock"></i>Logins</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{{route('login.create')}}">Ajouter</a></li>
+                            <li><i class="menu-icon fa fa-list-ul"></i><a href="{{route('loginuser.index')}}">Afficher la
+                                    liste</a></li>
                         </ul>
                     </li>
                 @endif
@@ -196,8 +207,9 @@
                 {{Session('error')}}
             </div>
         @endif
-
+<div class="container-fluid">
         @yield('content')
+</div>
 
     </div>
 
@@ -205,19 +217,22 @@
 </div><!-- /#right-panel -->
 
 {{--<!-- Right Panel -->--}}
-
+<link rel="stylesheet" href="{{ asset('css/jquery.datetimepicker.min.css') }}">
 <script src="/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="/js/jquery.datetimepicker.full.min.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/chartjs.min.js"></script>
 <script src="/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="/js/trumbowyg/trumbowyg.js"></script>
+<script src="/js/softease.js"></script>
 {{--<script src="/js/widgets.js"></script>--}}
 {{--<script src="/js/lib/vector-map/jquery.vmap.js"></script>--}}
 {{--<script src="/js/lib/vector-map/jquery.vmap.min.js"></script>--}}
 {{--<script src="/js/lib/vector-map/jquery.vmap.sampledata.js"></script>--}}
 {{--<script src="/js/lib/vector-map/country/jquery.vmap.world.js"></script>--}}
-<script src="/js/softease.js"></script>
 
 @yield('scripts')
 

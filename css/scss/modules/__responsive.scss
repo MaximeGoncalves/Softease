@@ -1,0 +1,12 @@
+@media screen and (max-width: 991px) {
+  h1 {
+    font-size: 60px; }
+
+  h2 {
+    font-size: 30px; } }
+@media screen and (max-width: 640px) {
+  header .title {
+    margin-top: 0px;
+    text-align: center; }
+  header .title h2 {
+    font-size: 18px; } }

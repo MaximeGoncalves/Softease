@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use App\Attachment;
 use App\Message;
 use App\Notifications\CloseTicket;
 use App\Notifications\NewTickets;
 use App\Role;
+use App\Search;
 use App\Society;
 use App\Source;
 use App\Technician;
@@ -14,6 +16,7 @@ use App\Ticket;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Couchbase\UserSettings;
@@ -21,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Spatie\CalendarLinks\Link;
 
 class TicketController extends Controller
 {
@@ -40,94 +44,95 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         $technicians = Technician::all();
-        $user = Auth::user();
+        $user = User::with(['roles'])->where('id', Auth::user()->id)->first();
         $sort = $request->get('sort');
         $technician = $request->get('technician');
 
+        if ($request->ajax()) {
+            $search = $request->search;
+            $query = new Search();
+            $data = $query->query($search, $sort, $technician);
+            return json_encode($data);
+        }
 
-        if ($request->sort == 0):
-            $request->session()->put('sort', 0);
-        else:
-            $request->session()->put('sort', $request->sort);
-        endif;
-
-
-        if ($request->technician == 0):
-            $request->session()->put('technician', 0);
-        else:
-            $request->session()->put('technician', $request->technician);
-        endif;
+//        if ($request->sort == 0):
+//            $request->session()->put('sort', 0);
+//        else:
+//            $request->session()->put('sort', $request->sort);
+//        endif;
+//
+//
+//        if ($request->technician == 0):
+//            $request->session()->put('technician', 0);
+//        else:
+//            $request->session()->put('technician', $request->technician);
+//        endif;
 
 
         if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
             $k = $sort - 1;
             if ($technician == 0):
                 if ($sort == 0):
-                    $tickets = Ticket::orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 else:
-                    $tickets = Ticket::where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 endif;
             else:
                 if ($sort == 0):
-                    $tickets = Ticket::where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 else:
-                    $tickets = Ticket::where('state', $k)->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
+                    $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('technician_id', $technician)->orderBy('created_at', 'desc')->paginate(15);
                     return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
                 endif;
             endif;
         elseif ($user->hasRole('ROLE_LEADER')):
-            $k = $sort - 1;
-            $tickets = Ticket::where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
-        else:
             if ($sort == 0):
-                $tickets = Ticket::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
                 return view('admin.tickets.indexUser', ['tickets' => $tickets]);
             else:
-            $k = $sort - 1;
-            $tickets = Ticket::where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.indexUser', ['tickets' => $tickets, 'technicians' => $technicians]);
+                $k = $sort - 1;
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('society_id', $user->society_id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.indexUser', ['tickets' => $tickets, 'technicians' => $technicians]);
+            endif;
+        else:
+            if ($sort == 0):
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.indexUser', ['tickets' => $tickets]);
+            else:
+                $k = $sort - 1;
+                $tickets = Ticket::with(['user', 'society', 'technician', 'source'])->where('state', $k)->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+                return view('admin.tickets.indexUser', ['tickets' => $tickets, 'technicians' => $technicians]);
             endif;
         endif;
 
 
-        if ($request->get('search')) {
-            $user = Auth::user();
-            $search = $request->get('search');
-            if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
-                $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(15);
-                return view('admin.tickets.index', compact('tickets', 'technicians'));
-            endif;
-            $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
-        }
-
-
-        $user = Auth::user();
-        //Si admin alors
-        if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
-            $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', compact('tickets', 'technicians'));
-        endif;
-
-
-        //Si user = LEADER
-        if ($user->hasRole('ROLE_LEADER')) :
-            $users = User::with('society')->where('society_id', $user->society_id)->get();
-//            $tickets = [];
-//            foreach ($users as $user) {
-            $tickets = Ticket::where('society_id', $user->society->id)->orderBy('created_at', 'desc')->paginate(15);
-            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
-        endif;
-
-
-
-        //Si User alors
-        $tickets = Ticket::with('user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.tickets.indexUser', compact(['tickets', 'user', 'technicians']));
+//        if ($request->get('search')) :
+//            $search = $request->get('search');
+//            if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
+//                $tickets = Ticket::with('user')->where('topic', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(15);
+//                return view('admin.tickets.index', compact('tickets', 'technicians'));
+//            endif;
+//            $tickets = Ticket::where('topic', 'LIKE', '%' . $search . '%')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+//            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+//        endif;
+//        if ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_TECHNICIAN')) :
+//            $tickets = Ticket::with('user')->orderBy('created_at', 'desc')->paginate(15);
+//            return view('admin.tickets.index', compact('tickets', 'technicians'));
+//        endif;
+//
+//
+//        if ($user->hasRole('ROLE_LEADER')) :
+//            $users = User::with('society')->where('society_id', $user->society_id)->get();
+//            $tickets = Ticket::where('society_id', $user->society->id)->orderBy('created_at', 'desc')->paginate(15);
+//            return view('admin.tickets.index', ['tickets' => $tickets, 'technicians' => $technicians]);
+//        endif;
+//
+//
+//        $tickets = Ticket::with('user')->where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+//        return view('admin.tickets.indexUser', compact(['tickets', 'user', 'technicians']));
     }
 
 
@@ -142,7 +147,9 @@ class TicketController extends Controller
 
         $societies = Society::all();
         $users = User::all();
-        return view('admin.tickets.create', compact(['societies', 'users']));
+        $technicians = Technician::all();
+        $sources = Source::all();
+        return view('admin.tickets.create', compact(['societies', 'users', 'technicians', 'sources']));
     }
 
     /**
@@ -166,6 +173,8 @@ class TicketController extends Controller
             $ticket->description = $request->description;
             $ticket->importance = $request->importance;
             $ticket->user()->associate($user->id);
+            $ticket->source()->associate($request->source);
+            $ticket->technician()->associate($request->technician);
             $ticket->society()->associate($user->society->id);
             $ticket->save();
         else:
@@ -201,9 +210,25 @@ class TicketController extends Controller
         endif;
 
         $user = User::find(1);
-        $user->notify(new NewTickets($ticket));
-        Session::flash('success', 'Le ticket à été créer, merci.');
-        return redirect(route('ticket.index'));
+        $allLeaders = User::whereHas('roles', function ($q) use ($ticket) {
+            $q->where('name', ['ROLE_LEADER']);
+        })->get();
+        foreach ($allLeaders as $leader) {
+            if ($leader->society_id == $ticket->society_id) {
+                try {
+                    $leader->notify(new NewTickets($ticket));
+                } catch (\Exception $e) {
+                    Session::flash('success', $e->getMessage());
+                }
+            }
+        }
+        try {
+            $user->notify(new NewTickets($ticket));
+        } catch (\Exception $e) {
+            Session::flash('error', 'A T T E N T I O N  : ' . $e->getMessage());
+        }
+        Session::flash('success', 'Le ticket à été créé, merci.');
+        return redirect(route('ticket.index', ['sort=1']));
     }
 
     /**
@@ -220,7 +245,8 @@ class TicketController extends Controller
         $sources = $source->pluck('name', 'id');
         $files = Attachment::where('ticket_id', $ticket->id)->get();
         $messages = Message::where('ticket_id', $ticket->id)->latest()->simplePaginate(5);
-        return view('admin.tickets.show', compact(['ticket', 'messages', 'technicians', 'sources', 'files']));
+        $actions = Action::where('ticket_id', $ticket->id)->latest()->paginate(5);
+        return view('admin.tickets.show', compact(['ticket', 'messages', 'actions', 'technicians', 'sources', 'files']));
     }
 
     /**
@@ -239,27 +265,49 @@ class TicketController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public
     function update(Request $request, $id)
     {
         $ticket = Ticket::find($id);
-        $ticket->technician_id = $request->technician;
-        $ticket->state = $request->state;
-        if ($request->state == 1):
-            $ticket->close_at = Carbon::now();
-            $user = User::find($ticket->user->id);
-            $softease = User::find(1);
-            $softease->notify(new CloseTicket($ticket));
-            $user->notify(new CloseTicket($ticket));
+        $isAppointment = $ticket->appointment;
+        if ($ticket->state === 0):
+            if ($request->state == 1):
+                $ticket->close_at = Carbon::now();
+                $user = User::find($ticket->user->id);
+                $allLeaders = User::whereHas('roles', function ($q) use ($ticket) {
+                    $q->where('name', ['ROLE_LEADER']);
+                })->get();
+                foreach ($allLeaders as $leader) {
+                    if ($leader->society_id == $ticket->society_id && $leader->id != $user->id) {
+                        $leader->notify(new CloseTicket($ticket));
+                    }
+                }
+                $softease = User::find(1);
+                $softease->notify(new CloseTicket($ticket));
+                $user->notify(new CloseTicket($ticket));
+            endif;
         endif;
+//        $ticket->technician_id = $request->technician;
+        $ticket->technician()->associate($request->technician);
+        $ticket->state = $request->state;
         $ticket->importance = $request->importance;
+        $ticket->appointment = $request->appointment;
         $ticket->source()->associate($request->source);
         $ticket->save();
+
+        if ($request->appointment && !$isAppointment || $isAppointment != $request->appointment) {
+            $technician = $ticket->technician;
+            $technician_user = User::select('email', 'name')->where('id', $technician->user_id)->first();
+            Mail::send('email.appointment', ['technician' => $technician_user, 'ticket' => $ticket], function ($m) use ($technician_user, $ticket) {
+                $m->from('sfticket@hostsf.fr', 'SFTicket');
+                $m->to($technician_user->email, $technician_user->name)->subject('Nouvelle intervention.');
+            });
+        }
         Session::flash('success', 'Le ticket à été mis à jour.');
-        return redirect(route('ticket.index'));
+        return redirect(route('ticket.index', ['sort=1']));
     }
 
     /**
@@ -268,8 +316,7 @@ class TicketController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         Ticket::destroy($id);
         Session::flash('success', 'Le ticket à été supprimé.');

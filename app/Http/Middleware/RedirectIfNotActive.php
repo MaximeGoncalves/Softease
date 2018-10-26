@@ -21,7 +21,7 @@ class RedirectIfNotActive
         if (!empty(Auth::user() && Auth::user()->isActive(Auth::user()) == false)):
             return redirect('/logout');
         elseif (Auth::user()->isActive(Auth::user()) == false):
-                Session::flash('error', 'Votre compte n\'est pas activé, merci de contacter votre reponsable.');
+                Session::flash('error', 'Votre compte n\'est pas activé, merci de contacter votre responsable.');
                 return redirect('/login');
 
         endif;

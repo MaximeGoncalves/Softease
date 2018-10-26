@@ -15,6 +15,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
+        $this->middleware(['auth', 'UserForbidden']);
     }
 
     /**
@@ -49,7 +50,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User();
-        $technician = new Technician();
         $user->name = $request->name;
         $user->fullname = $request->fullname;
         $user->email = $request->email;
@@ -58,9 +58,11 @@ class UserController extends Controller
         $user->society()->associate($request->society);
         $user->save();
         $user->roles()->attach($request->role);
-
-        $technician->user()->associate($user);
-        $technician->save();
+        if ($request->technician) {
+            $technician = new Technician();
+            $technician->user()->associate($user);
+            $technician->save();
+        }
         Session::flash('success', 'Utilisateur ajouter à la base de donnée');
         return redirect(route('user.index'));
     }
@@ -143,21 +145,5 @@ class UserController extends Controller
         return redirect(route('user.index'));
     }
 
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
-        $request->session()->invalidate();
-        Session::flash('success', 'Vous avez été déconnecté.');
-        return redirect('/login');
-    }
 
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard();
-    }
 }

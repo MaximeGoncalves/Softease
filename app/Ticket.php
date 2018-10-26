@@ -6,22 +6,34 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function society(){
+
+    public function society()
+    {
         return $this->belongsTo(Society::class);
     }
-    public function messages(){
+
+    public function messages()
+    {
         return $this->hasMany(Message::class);
     }
-    public function attachments(){
+
+    public function attachments()
+    {
         return $this->hasMany(Attachment::class);
     }
-    public function source(){
+
+    public function source()
+    {
         return $this->belongsTo(Source::class);
     }
-    public function technician(){
+
+    public function technician()
+    {
         return $this->belongsTo(Technician::class);
     }
+
 }

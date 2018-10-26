@@ -18,6 +18,7 @@ class CreateTicketsTable extends Migration
             $table->string('topic');
             $table->longText('description');
             $table->dateTime('close_at')->nullable();
+            $table->dateTime('appointment')->nullable();
             $table->integer('state')->default(0);
             $table->integer('source_id')->default(1);
             $table->integer('technician_id')->nullable();

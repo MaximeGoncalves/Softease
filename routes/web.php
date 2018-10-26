@@ -13,7 +13,7 @@
 
 
 Route::get('/', function () {
-    return view('index');
+    return view('auth.login');
 });
 
 Route::get('/blog', 'BlogController@blog')->name('blog.blog');
@@ -24,7 +24,7 @@ Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::post('/contact', 'HomeController@SendMail')->name('SendMail');
 
 Auth::routes();
-Route::get('/logout', 'UserController@logout');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/password/modify', 'Auth\ModifyPasswordController@index')->name('password.index');
 Route::post('/password/modify', 'Auth\ModifyPasswordController@store')->name('password.store');
 Route::get('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdminIndex')->name('password.adminReset');
@@ -34,14 +34,15 @@ Route::post('/password/resetAdmin/{id}', 'Auth\ModifyPasswordController@resetAdm
 Route::middleware(['auth', 'active'])->group(function () {
 //Route dashboard
     Route::get('/admin', 'HomeController@index')->name('home');
-    Route::get('/admin/chart','HomeController@charts');
-    Route::get('/admin/customers','HomeController@customers');
-    Route::get('/admin/technicians','HomeController@technicians');
+    Route::get('/admin/chart', 'HomeController@charts');
+    Route::get('/admin/customers', 'HomeController@customers');
+    Route::get('/admin/technicians', 'HomeController@technicians');
 // Route pour les blogs
     Route::resource('admin/blog', 'BlogController');
     Route::resource('admin/category', 'CategoryController');
 // Route pour les logins
     Route::resource('/admin/login', 'loginsController');
+    Route::resource('/admin/loginuser', 'CustomersLoginsController');
 //Route pour Sociétés
     Route::resource('/admin/society', 'SocietyController');
 //Route pour users
@@ -52,4 +53,8 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::resource('/admin/ticket', 'TicketController');
     Route::post('/admin/ticket/{ticket}', 'MessageController@store')->name('message.store');
     Route::get('/admin/ticket/{ticket}/{message}', 'MessageController@destroy')->name('message.destroy');
+    //Action effectuées.
+    Route::post('/admin/ticket/action/{ticket}', 'ActionsController@store')->name('action.store');
+    Route::get('/admin/ticket/action/{ticket}/{action}', 'ActionsController@destroy')->name('action.destroy');
+
 });
